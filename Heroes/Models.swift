@@ -51,30 +51,32 @@ struct Stories: Codable {
 
 struct StoriesItem: Codable {
     let resourceURI, name: String
-    let type: ItemType
+    let type: String
 }
 
-enum ItemType: String, Codable {
-    case cover = "cover"
-    case empty = ""
-    case interiorStory = "interiorStory"
-    case pinup = "pinup"
-}
+//enum ItemType: String, Codable {
+//    case cover = "cover"
+//    case empty = ""
+//    case interiorStory = "interiorStory"
+//    case pinup = "pinup"
+//    case backCover = "backcovers"
+//    case ad = "ad"
+//}
 
 struct Thumbnail: Codable {
     let path: String
-    let purpleExtension: Extension
+    let pathExtension: String
 
     enum CodingKeys: String, CodingKey {
         case path
-        case purpleExtension = "extension"
+        case pathExtension = "extension"
     }
 }
 
-enum Extension: String, Codable {
-    case gif = "gif"
-    case jpg = "jpg"
-}
+//enum Extension: String, Codable {
+//    case gif = "gif"
+//    case jpg = "jpg"
+//}
 
 struct URLSpecifier: Codable {
     let type: URLType
@@ -91,8 +93,14 @@ enum URLType: String, Codable {
 
 extension Models {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(Models.self, from: data) else { return nil }
+        
+        do {
+        let me = try JSONDecoder().decode(Models.self, from: data)
         self = me
+        } catch {
+            print (error)
+            return nil
+        }
     }
 
     init?(_ json: String, using encoding: String.Encoding = .utf8) {

@@ -10,9 +10,10 @@ import UIKit
 
 class HeroesListTableViewController: UITableViewController {
     
-    
+    var isDataLoading =  false
+    var offset = 0
     let service = Services()
-    var models: Models?
+    var heroes = [Result]()
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,12 +25,31 @@ class HeroesListTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        service.request { models in
-            
-            self.models = models
-            self.tableView.reloadData()
-        }
         
+        let spinner = UIActivityIndicatorView(style: .gray)
+        tableView.tableFooterView = spinner
+        spinner.startAnimating()
+        
+        loadHeroes()
+        
+    }
+    
+    func loadHeroes () {
+        
+        isDataLoading = true
+        service.request(offset: 20 * offset) { models in
+    
+        
+        
+        let indexPaths = (self.heroes.count..<(self.heroes.count + models.data.results.count)).map { item in
+            return IndexPath(item: item, section: 0)
+        }
+            
+            self.heroes.append(contentsOf: models.data.results)
+         self.tableView.insertRows(at: indexPaths, with: .none)
+        self.offset += 1
+            self.isDataLoading = false
+        }
     }
 
     // MARK: - Table view data source
@@ -41,7 +61,7 @@ class HeroesListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return models?.data.results.count ?? 0
+        return heroes.count
     }
 
 
@@ -49,14 +69,30 @@ class HeroesListTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = models?.data.results[indexPath.row].name
-        let url = URL(string: (models?.data.results[indexPath.row].thumbnail.path)! + "." + (models?.data.results[indexPath.row].thumbnail.purpleExtension.rawValue)!)
-        
-        cell.imageView?.image = UIImage(named: "loading")
-        cell.imageView?.setURL(url: url!)
+        cell.textLabel?.text = heroes[indexPath.row].name
+//        let url = URL(string: (heroes[indexPath.row].thumbnail.path) + "." + (heroes[indexPath.row].thumbnail.pathExtension))
+//        
+//        cell.imageView?.image = UIImage(named: "loading")
+//        cell.imageView?.setURL(url: url!)
         
 
         return cell
+    }
+    
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+                isDataLoading = true
+                
+                loadHeroes()
+            }
+        }
     }
 
 
