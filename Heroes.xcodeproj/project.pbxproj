@@ -105,6 +105,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C4226732113CB46003F4875 /* EmbeddedList */ = {
+			isa = PBXGroup;
+			children = (
+				7C42266721133894003F4875 /* EmbeddedListViewController.swift */,
+				7C42267121136B3D003F4875 /* EmbeddedListViewController.xib */,
+				7C42266B2113391D003F4875 /* EmbeddedListCell.swift */,
+				7C42266C2113391D003F4875 /* EmbeddedListCell.xib */,
+			);
+			path = EmbeddedList;
+			sourceTree = "<group>";
+		};
+		7C4226742113CB63003F4875 /* HeroDetails */ = {
+			isa = PBXGroup;
+			children = (
+				7C42265B21130A3C003F4875 /* HeroDetailsViewController.swift */,
+				7C42265C21130A3C003F4875 /* HeroDetailsViewController.xib */,
+			);
+			path = HeroDetails;
+			sourceTree = "<group>";
+		};
+		7C4226752113CB8B003F4875 /* HeroesList */ = {
+			isa = PBXGroup;
+			children = (
+				7C069FF82111D24E00E65B32 /* HeroCell.swift */,
+				7C069FF92111D24E00E65B32 /* HeroCell.xib */,
+				7C069FF42111D1D400E65B32 /* HeroesListTableViewController.swift */,
+				7C069FF52111D1D400E65B32 /* HeroesListTableViewController.xib */,
+			);
+			path = HeroesList;
+			sourceTree = "<group>";
+		};
+		7C4226762113CBC8003F4875 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7C56FBB02111C2390083E5B1 /* Services.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7C4226772113CBFA003F4875 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7C26F8762111CB6B00E5F876 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		7C56FB762111C1F10083E5B1 = {
 			isa = PBXGroup;
 			children = (
@@ -128,26 +175,19 @@
 		7C56FB812111C1F10083E5B1 /* Heroes */ = {
 			isa = PBXGroup;
 			children = (
-				7C42266721133894003F4875 /* EmbeddedListViewController.swift */,
-				7C42267121136B3D003F4875 /* EmbeddedListViewController.xib */,
-				7C42266B2113391D003F4875 /* EmbeddedListCell.swift */,
-				7C42266C2113391D003F4875 /* EmbeddedListCell.xib */,
+				7C4226732113CB46003F4875 /* EmbeddedList */,
+				7C4226742113CB63003F4875 /* HeroDetails */,
+				7C4226752113CB8B003F4875 /* HeroesList */,
 				7C42265F21130A67003F4875 /* HeroListToDetailsTransition.swift */,
+				7C4226762113CBC8003F4875 /* Services */,
+				7C4226772113CBFA003F4875 /* Models */,
+				7C56FB892111C1F30083E5B1 /* Assets.xcassets */,
 				7C42266121130B18003F4875 /* NavigationController.swift */,
-				7C42265B21130A3C003F4875 /* HeroDetailsViewController.swift */,
-				7C42265C21130A3C003F4875 /* HeroDetailsViewController.xib */,
-				7C069FF42111D1D400E65B32 /* HeroesListTableViewController.swift */,
-				7C069FF52111D1D400E65B32 /* HeroesListTableViewController.xib */,
-				7C069FF82111D24E00E65B32 /* HeroCell.swift */,
-				7C069FF92111D24E00E65B32 /* HeroCell.xib */,
 				7C56FB822111C1F10083E5B1 /* AppDelegate.swift */,
 				7C56FB842111C1F10083E5B1 /* ViewController.swift */,
-				7C56FBB02111C2390083E5B1 /* Services.swift */,
-				7C26F8762111CB6B00E5F876 /* Models.swift */,
 				7C56FBB22111C4030083E5B1 /* Heroes-Bridging-Header.h */,
 				7C56FBB32111C4260083E5B1 /* Utilities.swift */,
 				7C56FB862111C1F10083E5B1 /* Main.storyboard */,
-				7C56FB892111C1F30083E5B1 /* Assets.xcassets */,
 				7C56FB8B2111C1F30083E5B1 /* LaunchScreen.storyboard */,
 				7C56FB8E2111C1F30083E5B1 /* Info.plist */,
 			);
