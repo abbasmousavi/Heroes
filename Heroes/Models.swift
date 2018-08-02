@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct Models: Codable {
+struct APIResponse<T:Codable>: Codable {
     let code: Int
     let status, copyright, attributionText, attributionHTML: String
     let etag: String
-    let data: PurpleData
+    let data: ResponseData<T>
 }
 
-struct PurpleData: Codable {
+struct ResponseData<T:Codable>: Codable {
     let offset, limit, total, count: Int
-    let results: [Result]
+    let results: [T]
 }
 
-struct Result: Codable {
+struct Hero: Codable {
     let id: Int
     let name, description, modified: String
     let thumbnail: Thumbnail
@@ -91,11 +91,11 @@ enum URLType: String, Codable {
 
 // MARK: Convenience initializers
 
-extension Models {
+extension APIResponse {
     init?(data: Data) {
         
         do {
-        let me = try JSONDecoder().decode(Models.self, from: data)
+        let me = try JSONDecoder().decode(APIResponse.self, from: data)
         self = me
         } catch {
             print (error)
@@ -120,9 +120,9 @@ extension Models {
     }
 }
 
-extension PurpleData {
+extension ResponseData {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(PurpleData.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(ResponseData.self, from: data) else { return nil }
         self = me
     }
 
@@ -143,9 +143,9 @@ extension PurpleData {
     }
 }
 
-extension Result {
+extension Hero {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(Result.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(Hero.self, from: data) else { return nil }
         self = me
     }
 

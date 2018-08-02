@@ -10,9 +10,9 @@ import UIKit
 
 class HeroDetailsViewController: UIViewController {
     
-    let hero: Result
+    let hero: Hero
     
-    init(hero: Result) {
+    init(hero: Hero) {
         self.hero = hero
         super.init(nibName: nil, bundle: nil)
     }

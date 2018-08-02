@@ -13,7 +13,7 @@ class Services {
     
     let session = URLSession(configuration: URLSessionConfiguration.default)
     
-    func request (limit:Int = 20, offset:Int = 0, completion: @escaping ((Models) -> Void)) {
+    func request<T> (limit:Int = 20, offset:Int = 0, completion: @escaping ((APIResponse<T>) -> Void)) {
         
         let ts = Int(Date().timeIntervalSince1970)
         let hashableString = "\(ts)" + "925b08d6c60037b1d07a1123b0a80873d5f0da79" + "608dd9c32bcf28c626313e295070623c"
@@ -25,7 +25,7 @@ class Services {
         let request = URLRequest(url: url!)
 
         let task = session.dataTask(with: request) { (data, response, error) in
-           let model = Models(data: data!)
+           let model = APIResponse<T>(data: data!)
                         print(model)
             DispatchQueue.main.async { // 2
                 completion(model!)

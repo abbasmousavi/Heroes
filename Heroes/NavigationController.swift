@@ -19,7 +19,7 @@ class NavigationController: UINavigationController, HeroesListTableViewControlle
     }
     
     
-    func userDidSelectedItem(hero: Result, animationView: UIView?) {
+    func userDidSelectedItem(hero: Hero, animationView: UIView?) {
         self.animationData = animationView
         let vc = HeroDetailsViewController(hero: hero)
         vc.transitioningDelegate = self

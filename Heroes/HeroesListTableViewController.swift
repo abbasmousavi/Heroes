@@ -9,14 +9,14 @@
 import UIKit
 
 protocol HeroesListTableViewControllerProtocol: class {
-    func userDidSelectedItem(hero:Result, animationView:UIView?) -> Void;
+    func userDidSelectedItem(hero:Hero, animationView:UIView?) -> Void;
 }
 class HeroesListTableViewController: UITableViewController {
     
     var isDataLoading =  false
     var offset = 0
     let service = Services()
-    var heroes = [Result]()
+    var heroes = [Hero]()
     weak var delegate: HeroesListTableViewControllerProtocol?
         
     override func viewDidLoad() {
@@ -41,7 +41,7 @@ class HeroesListTableViewController: UITableViewController {
     func loadHeroes () {
         
         isDataLoading = true
-        service.request(offset: 20 * offset) { models in
+        service.request(offset: 20 * offset) { (models: APIResponse<Hero>) in
     
         
         
