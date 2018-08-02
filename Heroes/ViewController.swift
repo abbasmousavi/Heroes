@@ -21,7 +21,10 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.present(HeroesListTableViewController(), animated: true, completion: nil)
+        let vc = HeroesListTableViewController()
+        let nv = NavigationController(rootViewController: vc)
+        vc.delegate = nv
+        self.present(nv, animated: true, completion: nil)
     }
 
 

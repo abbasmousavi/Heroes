@@ -8,12 +8,16 @@
 
 import UIKit
 
+protocol HeroesListTableViewControllerProtocol: class {
+    func userDidSelectedItem(hero:Result, animationView:UIView?) -> Void;
+}
 class HeroesListTableViewController: UITableViewController {
     
     var isDataLoading =  false
     var offset = 0
     let service = Services()
     var heroes = [Result]()
+    weak var delegate: HeroesListTableViewControllerProtocol?
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,15 +74,21 @@ class HeroesListTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.textLabel?.text = heroes[indexPath.row].name
-//        let url = URL(string: (heroes[indexPath.row].thumbnail.path) + "." + (heroes[indexPath.row].thumbnail.pathExtension))
-//        
-//        cell.imageView?.image = UIImage(named: "loading")
-//        cell.imageView?.setURL(url: url!)
+        let url = URL(string: (heroes[indexPath.row].thumbnail.path) + "." + (heroes[indexPath.row].thumbnail.pathExtension))
+        
+        cell.imageView?.image = UIImage(named: "loading")
+        cell.imageView?.setURL(url: url!)
         
 
         return cell
     }
     
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
+        delegate?.userDidSelectedItem(hero: heroes[indexPath.row], animationView: cell?.imageView)
+        
+    }
     
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (!isDataLoading) {
