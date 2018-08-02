@@ -41,7 +41,7 @@ class HeroesListTableViewController: UITableViewController {
     func loadHeroes () {
         
         isDataLoading = true
-        service.request(offset: 20 * offset) { (models: APIResponse<Hero>) in
+        service.request(uri:"https://gateway.marvel.com/v1/public/characters", offset: 20 * offset) { (models: APIResponse<Hero>) in
     
         
         

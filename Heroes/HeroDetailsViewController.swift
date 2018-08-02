@@ -21,6 +21,7 @@ class HeroDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @IBOutlet weak var seriesView: UIView!
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
@@ -34,6 +35,17 @@ class HeroDetailsViewController: UIViewController {
         mainImage?.setURL(url: url!)
 
         // Do any additional setup after loading the view.
+        
+        let comics = EmbeddedListViewController<Comic>(uri: hero.comics.collectionURI!)
+        addChild(comics)
+        seriesView.addSubview(comics.view)
+        comics.view.translatesAutoresizingMaskIntoConstraints = false
+        comics.view.topAnchor.constraint(equalTo: seriesView.topAnchor).isActive = true
+        comics.view.bottomAnchor.constraint(equalTo: seriesView.bottomAnchor).isActive = true
+        comics.view.leadingAnchor.constraint(equalTo: seriesView.leadingAnchor).isActive = true
+        comics.view.trailingAnchor.constraint(equalTo: seriesView.trailingAnchor).isActive = true
+        
+        comics.didMove(toParent: self)
     }
 
 

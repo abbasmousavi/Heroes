@@ -8,6 +8,11 @@
 
 import Foundation
 
+protocol Listable {
+    var title:String? {get}
+    var thumbnail: Thumbnail? {get}
+}
+
 struct APIResponse<T:Codable>: Codable {
     let code: Int
     let status, copyright, attributionText, attributionHTML: String
@@ -32,14 +37,17 @@ struct Hero: Codable {
 }
 
 struct Comics: Codable {
-    let available: Int
-    let collectionURI: String
-    let items: [ComicsItem]
+    let available: Int?
+    let collectionURI: String?
+    let items: [Comic]
     let returned: Int
 }
 
-struct ComicsItem: Codable {
-    let resourceURI, name: String
+struct Comic: Codable, Listable {
+    let resourceURI: String
+    let name: String? //
+    var title: String? //
+    var thumbnail: Thumbnail?
 }
 
 struct Stories: Codable {
@@ -189,9 +197,9 @@ extension Comics {
     }
 }
 
-extension ComicsItem {
+extension Comic {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(ComicsItem.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(Comic.self, from: data) else { return nil }
         self = me
     }
 
