@@ -26,7 +26,7 @@ class Services {
 
         let task = session.dataTask(with: request) { (data, response, error) in
            let model = APIResponse<T>(data: data!)
-                        print(model)
+                       // print(model)
             DispatchQueue.main.async { // 2
                 completion(model!)
             }

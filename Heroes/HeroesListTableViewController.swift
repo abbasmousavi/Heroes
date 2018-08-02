@@ -74,10 +74,12 @@ class HeroesListTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.textLabel?.text = heroes[indexPath.row].name
-        let url = URL(string: (heroes[indexPath.row].thumbnail.path) + "." + (heroes[indexPath.row].thumbnail.pathExtension))
+
+        if let url = heroes[indexPath.row].thumbnail.thumbnailURL {
         
         cell.imageView?.image = UIImage(named: "loading")
-        cell.imageView?.setURL(url: url!)
+        cell.imageView?.setURL(url: url)
+        }
         
 
         return cell

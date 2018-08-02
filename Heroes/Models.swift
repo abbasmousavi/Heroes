@@ -72,8 +72,8 @@ struct StoriesItem: Codable {
 //}
 
 struct Thumbnail: Codable {
-    let path: String
-    let pathExtension: String
+    let path: String?
+    let pathExtension: String?
 
     enum CodingKeys: String, CodingKey {
         case path
@@ -285,6 +285,12 @@ extension Thumbnail {
     var json: String? {
         guard let data = self.jsonData else { return nil }
         return String(data: data, encoding: .utf8)
+    }
+    
+    var thumbnailURL:URL? {
+    
+        guard let path = self.path, let extention = pathExtension else {return nil}
+        return URL(string: path + "." + extention)
     }
 }
 

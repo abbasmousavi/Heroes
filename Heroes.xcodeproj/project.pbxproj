@@ -17,9 +17,9 @@
 		7C42266021130A67003F4875 /* HeroListToDetailsTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42265F21130A67003F4875 /* HeroListToDetailsTransition.swift */; };
 		7C42266221130B18003F4875 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42266121130B18003F4875 /* NavigationController.swift */; };
 		7C42266921133894003F4875 /* EmbeddedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42266721133894003F4875 /* EmbeddedListViewController.swift */; };
-		7C42266A21133894003F4875 /* EmbeddedListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C42266821133894003F4875 /* EmbeddedListViewController.xib */; };
 		7C42266D2113391D003F4875 /* EmbeddedListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42266B2113391D003F4875 /* EmbeddedListCell.swift */; };
 		7C42266E2113391D003F4875 /* EmbeddedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C42266C2113391D003F4875 /* EmbeddedListCell.xib */; };
+		7C42267221136B3D003F4875 /* EmbeddedListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C42267121136B3D003F4875 /* EmbeddedListViewController.xib */; };
 		7C56FB832111C1F10083E5B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C56FB822111C1F10083E5B1 /* AppDelegate.swift */; };
 		7C56FB852111C1F10083E5B1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C56FB842111C1F10083E5B1 /* ViewController.swift */; };
 		7C56FB882111C1F10083E5B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C56FB862111C1F10083E5B1 /* Main.storyboard */; };
@@ -59,9 +59,9 @@
 		7C42265F21130A67003F4875 /* HeroListToDetailsTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroListToDetailsTransition.swift; sourceTree = "<group>"; };
 		7C42266121130B18003F4875 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		7C42266721133894003F4875 /* EmbeddedListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedListViewController.swift; sourceTree = "<group>"; };
-		7C42266821133894003F4875 /* EmbeddedListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbeddedListViewController.xib; sourceTree = "<group>"; };
 		7C42266B2113391D003F4875 /* EmbeddedListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmbeddedListCell.swift; sourceTree = "<group>"; };
 		7C42266C2113391D003F4875 /* EmbeddedListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbeddedListCell.xib; sourceTree = "<group>"; };
+		7C42267121136B3D003F4875 /* EmbeddedListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmbeddedListViewController.xib; sourceTree = "<group>"; };
 		7C56FB7F2111C1F10083E5B1 /* Heroes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heroes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C56FB822111C1F10083E5B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C56FB842111C1F10083E5B1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -129,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				7C42266721133894003F4875 /* EmbeddedListViewController.swift */,
-				7C42266821133894003F4875 /* EmbeddedListViewController.xib */,
+				7C42267121136B3D003F4875 /* EmbeddedListViewController.xib */,
 				7C42266B2113391D003F4875 /* EmbeddedListCell.swift */,
 				7C42266C2113391D003F4875 /* EmbeddedListCell.xib */,
 				7C42265F21130A67003F4875 /* HeroListToDetailsTransition.swift */,
@@ -280,10 +280,10 @@
 				7C069FF72111D1D400E65B32 /* HeroesListTableViewController.xib in Resources */,
 				7C56FB8A2111C1F30083E5B1 /* Assets.xcassets in Resources */,
 				7C42266E2113391D003F4875 /* EmbeddedListCell.xib in Resources */,
+				7C42267221136B3D003F4875 /* EmbeddedListViewController.xib in Resources */,
 				7C56FB882111C1F10083E5B1 /* Main.storyboard in Resources */,
 				7C069FFB2111D24E00E65B32 /* HeroCell.xib in Resources */,
 				7C42265E21130A3C003F4875 /* HeroDetailsViewController.xib in Resources */,
-				7C42266A21133894003F4875 /* EmbeddedListViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

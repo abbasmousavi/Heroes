@@ -21,31 +21,44 @@ class HeroDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var storiesView: UIView!
+    @IBOutlet weak var eventsView: UIView!
+    @IBOutlet weak var comicsView: UIView!
     @IBOutlet weak var seriesView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    @IBOutlet weak var mainImage: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let url = URL(string: hero.thumbnail.path + "." + (hero.thumbnail.pathExtension))
+        if let url = hero.thumbnail.thumbnailURL {
+        mainImage?.setURL(url: url)
+        }
         
-        mainImage?.image = UIImage(named: "loading")
-        mainImage?.setURL(url: url!)
+        titleLabel?.text = hero.name
+        descriptionLabel?.text = hero.description.count > 0 ? hero.description : "No description available"
 
         // Do any additional setup after loading the view.
         
-        let comics = EmbeddedListViewController<Comic>(uri: hero.comics.collectionURI!)
-        addChild(comics)
-        seriesView.addSubview(comics.view)
-        comics.view.translatesAutoresizingMaskIntoConstraints = false
-        comics.view.topAnchor.constraint(equalTo: seriesView.topAnchor).isActive = true
-        comics.view.bottomAnchor.constraint(equalTo: seriesView.bottomAnchor).isActive = true
-        comics.view.leadingAnchor.constraint(equalTo: seriesView.leadingAnchor).isActive = true
-        comics.view.trailingAnchor.constraint(equalTo: seriesView.trailingAnchor).isActive = true
+        let comics = EmbeddedListViewController<Comic>(uri: hero.comics.collectionURI!, title: "Comics")
+        addChild(comics, in: comicsView)
+
         
-        comics.didMove(toParent: self)
+        let series = EmbeddedListViewController<Comic>(uri: hero.series.collectionURI!, title: "Series")
+        addChild(series, in: seriesView)
+        
+        
+        let events = EmbeddedListViewController<Comic>(uri: hero.events.collectionURI!, title: "Events")
+        addChild(events, in: eventsView)
+        
+        let stories = EmbeddedListViewController<Comic>(uri: hero.stories.collectionURI, title: "Stories")
+        addChild(stories, in: storiesView)
+
     }
 
 

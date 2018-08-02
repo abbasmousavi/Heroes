@@ -10,48 +10,55 @@ import UIKit
 
 private let reuseIdentifier = "EmbeddedListCell"
 
-class EmbeddedListViewController<T:Codable & Listable>: UICollectionViewController {
+class EmbeddedListViewController<T:Codable & Listable>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var messagesLabel: UILabel!
+    
+    
     private let uri: String
     private var items = [T]()
     private let service = Services()
-    private let activityIndicator = UIActivityIndicatorView(style: .gray)
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(uri: String) {
+    init(uri: String, title: String) {
         self.uri = uri
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: 120, height: 230)
-        super.init(collectionViewLayout: layout)
-    }
-
-    func setupViews () {
-
-        self.collectionView!.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = .white
-        self.collectionView.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.startAnimating()
-        activityIndicator.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor).isActive = true
-        activityIndicator.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor).isActive = true
+        super.init(nibName: "EmbeddedListViewController", bundle: nil)
+        self.title = title
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupViews()
+        collectionView?.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.backgroundColor = .white
+        titleLabel?.text = title
         loadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
     }
 
     func loadData() {
-
+        messagesLabel?.isHidden = true
+        messagesLabel?.text = nil
         service.request(uri: uri) { (response: APIResponse<T>) in
             self.items = response.data.results
             self.activityIndicator.stopAnimating()
+            if (self.items.count > 0) {
             self.collectionView.reloadData()
+            } else {
+                self.messagesLabel?.isHidden = false
+                self.messagesLabel?.text = "No items available"
+            }
         }
     }
 
@@ -67,23 +74,24 @@ class EmbeddedListViewController<T:Codable & Listable>: UICollectionViewControll
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
         return items.count
     }
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? EmbeddedListCell
 
-        let url = URL(string: (items[indexPath.row].thumbnail?.path)! + "." + (items[indexPath.row].thumbnail?.pathExtension)!)
+        if let url = items[indexPath.row].thumbnail?.thumbnailURL {
         cell?.mainImageView?.image = UIImage(named: "loading")
-        cell?.mainImageView?.setURL(url: url!)
+        cell?.mainImageView?.setURL(url: url)
+        }
         cell?.titleLabel?.text = items[indexPath.row].title
 
 
