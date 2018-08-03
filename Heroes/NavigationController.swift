@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NavigationController: UINavigationController, HeroesListTableViewControllerProtocol, UIViewControllerTransitioningDelegate {
+class NavigationController: UINavigationController, HeroesListViewControllerProtocol, UIViewControllerTransitioningDelegate {
 
     private var animationData: UIView?
 

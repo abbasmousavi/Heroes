@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="StateIndicator" customModule="Heroes" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicator" destination="17R-kk-Zk1" id="TIu-b6-lM8"/>
+                <outlet property="contentView" destination="AuC-Uv-q5i" id="zhY-Qu-RVB"/>
+                <outlet property="messagesLabel" destination="785-o8-DbS" id="25q-DV-ffe"/>
+                <outlet property="retryButton" destination="ra5-Iy-95A" id="eic-ni-GKP"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="AuC-Uv-q5i">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="126"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="17R-kk-Zk1">
+                    <rect key="frame" x="163" y="5" width="20" height="20"/>
+                </activityIndicatorView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="785-o8-DbS">
+                    <rect key="frame" x="73" y="39" width="200" height="17"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="TdV-to-uNB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ra5-Iy-95A">
+                    <rect key="frame" x="156" y="31" width="35" height="108"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <state key="normal" title="Retry"/>
+                    <connections>
+                        <action selector="retry:" destination="-1" eventType="touchUpInside" id="2eb-rS-4YU"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="ra5-Iy-95A" secondAttribute="bottom" constant="5" id="6z9-uE-lZu"/>
+                <constraint firstItem="ra5-Iy-95A" firstAttribute="top" secondItem="785-o8-DbS" secondAttribute="bottom" constant="2" id="9fR-Dh-qGq"/>
+                <constraint firstAttribute="trailing" secondItem="785-o8-DbS" secondAttribute="trailing" constant="10" id="Agk-Uc-Yoj"/>
+                <constraint firstItem="785-o8-DbS" firstAttribute="centerX" secondItem="AuC-Uv-q5i" secondAttribute="centerX" id="BtG-IH-vSm"/>
+                <constraint firstItem="17R-kk-Zk1" firstAttribute="centerX" secondItem="AuC-Uv-q5i" secondAttribute="centerX" id="Dwo-AO-fL9"/>
+                <constraint firstItem="ra5-Iy-95A" firstAttribute="centerX" secondItem="AuC-Uv-q5i" secondAttribute="centerX" id="Quk-Bf-0VQ"/>
+                <constraint firstItem="785-o8-DbS" firstAttribute="leading" secondItem="AuC-Uv-q5i" secondAttribute="leading" constant="10" id="Tgl-gh-rbL"/>
+                <constraint firstItem="17R-kk-Zk1" firstAttribute="top" secondItem="AuC-Uv-q5i" secondAttribute="top" constant="5" id="kv3-qK-FLV"/>
+                <constraint firstItem="785-o8-DbS" firstAttribute="top" secondItem="17R-kk-Zk1" secondAttribute="bottom" constant="14" id="ycz-De-1Nd"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="DRP-79-qmZ"/>
+            <point key="canvasLocation" x="90" y="0.0"/>
+        </view>
+    </objects>
+</document>

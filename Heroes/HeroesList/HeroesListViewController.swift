@@ -8,43 +8,45 @@
 
 import UIKit
 
-protocol HeroesListTableViewControllerProtocol: class {
+protocol HeroesListViewControllerProtocol: class {
     func userDidSelectedItem(hero:Hero, animationView:UIView?) -> Void;
 }
-class HeroesListTableViewController: UITableViewController, UISearchBarDelegate {
+class HeroesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+
+    @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var stateIndicator: StateIndicator!
     var isDataLoading =  false
     var offset = 0
     let service = Services()
     var heroes = [Hero]()
-    weak var delegate: HeroesListTableViewControllerProtocol?
+    weak var delegate: HeroesListViewControllerProtocol?
     let searchController = UISearchController(searchResultsController: nil)
     var searchBar: UISearchBar { return searchController.searchBar }
+    private let paginationLoadingIndicator = UIActivityIndicatorView(style: .gray)
         
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        tableView .register(UINib(nibName: "HeroCell", bundle: nil), forCellReuseIdentifier: "HeroCell")
+        tableView.register(UINib(nibName: "HeroCell", bundle: nil), forCellReuseIdentifier: "HeroCell")
+        self.title = "Characters"
         self.configureSearchController()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        paginationLoadingIndicator.hidesWhenStopped = true
+        tableView.tableFooterView = paginationLoadingIndicator
         
-        let spinner = UIActivityIndicatorView(style: .gray)
-        tableView.tableFooterView = spinner
-        spinner.startAnimating()
-        
+        stateIndicator.startLoading()
         loadHeroes()
         
     }
+    
+
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         offset = 0
         heroes = []
         tableView.reloadData()
+        stateIndicator.startLoading()
         loadHeroes(query: searchBar.text)
     }
     
@@ -52,6 +54,7 @@ class HeroesListTableViewController: UITableViewController, UISearchBarDelegate 
         offset = 0
         heroes = []
         tableView.reloadData()
+        stateIndicator.startLoading()
         loadHeroes()
     }
     
@@ -70,26 +73,34 @@ class HeroesListTableViewController: UITableViewController, UISearchBarDelegate 
         }
             
             self.heroes.append(contentsOf: models.data.results)
+            
+            if (self.heroes.count > 0) {
+                self.stateIndicator.stopLoading()
+            } else {
+                self.stateIndicator.stopLoading(message: "No items available")
+            }
          self.tableView.insertRows(at: indexPaths, with: .none)
         self.offset += 1
             self.isDataLoading = false
+            self.paginationLoadingIndicator.stopAnimating()
+            self.tableView.refreshControl?.endRefreshing()
         }
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return heroes.count
     }
 
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath)
 
         // Configure the cell...
@@ -106,13 +117,13 @@ class HeroesListTableViewController: UITableViewController, UISearchBarDelegate 
     }
     
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)
         delegate?.userDidSelectedItem(hero: heroes[indexPath.row], animationView: cell?.imageView)
         
     }
     
-    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if (!isDataLoading) {
             // Calculate the position of one screen length before the bottom of the results
             let scrollViewContentHeight = tableView.contentSize.height
@@ -121,6 +132,7 @@ class HeroesListTableViewController: UITableViewController, UISearchBarDelegate 
             // When the user has scrolled past the threshold, start requesting
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
                 isDataLoading = true
+                paginationLoadingIndicator.startAnimating()
                 loadHeroes()
             }
         }
@@ -128,10 +140,9 @@ class HeroesListTableViewController: UITableViewController, UISearchBarDelegate 
     
     func configureSearchController() {
         searchController.obscuresBackgroundDuringPresentation = false
-        
         searchBar.text = ""
         searchBar.showsCancelButton = false
-        searchBar.placeholder = "Enter GitHub Id, e.g., \"scotteg\""
+        searchBar.placeholder = "Search by character name"
         
         if #available(iOS 11.0, *) {
             navigationItem.searchController = searchController
@@ -141,51 +152,4 @@ class HeroesListTableViewController: UITableViewController, UISearchBarDelegate 
 
         
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
 }
