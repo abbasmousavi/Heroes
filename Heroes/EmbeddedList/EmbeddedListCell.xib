@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="162" height="270"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tna-FT-NfX">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tna-FT-NfX" customClass="NetworkImageView" customModule="Heroes" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="162" height="243"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="tna-FT-NfX" secondAttribute="height" multiplier="50:75" id="Vxc-SI-ZXS"/>

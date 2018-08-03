@@ -10,12 +10,12 @@ import UIKit
 
 class EmbeddedListCell: UICollectionViewCell {
 
-    @IBOutlet weak var mainImageView: UIImageView!
-    
+    @IBOutlet weak var mainImageView: NetworkImageView!
     @IBOutlet weak var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        mainImageView.layer.cornerRadius = 5
+        mainImageView.layer.masksToBounds = true
     }
-
 }

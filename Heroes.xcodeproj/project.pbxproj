@@ -136,8 +136,6 @@
 				7C069FF92111D24E00E65B32 /* HeroCell.xib */,
 				7C069FF42111D1D400E65B32 /* HeroesListViewController.swift */,
 				7C069FF52111D1D400E65B32 /* HeroesListViewController.xib */,
-				7C7D9BE1211449A60073D2DF /* StateIndicator.swift */,
-				7C7D9BE3211449B60073D2DF /* StateIndicator.xib */,
 			);
 			path = HeroesList;
 			sourceTree = "<group>";
@@ -190,9 +188,9 @@
 				7C56FB892111C1F30083E5B1 /* Assets.xcassets */,
 				7C42266121130B18003F4875 /* NavigationController.swift */,
 				7C56FB822111C1F10083E5B1 /* AppDelegate.swift */,
+				7C7D9BE5211457F30073D2DF /* Utilities */,
 				7C56FB842111C1F10083E5B1 /* ViewController.swift */,
 				7C56FBB22111C4030083E5B1 /* Heroes-Bridging-Header.h */,
-				7C56FBB32111C4260083E5B1 /* Utilities.swift */,
 				7C56FB862111C1F10083E5B1 /* Main.storyboard */,
 				7C56FB8B2111C1F30083E5B1 /* LaunchScreen.storyboard */,
 				7C56FB8E2111C1F30083E5B1 /* Info.plist */,
@@ -216,6 +214,16 @@
 				7C56FBA42111C1F30083E5B1 /* Info.plist */,
 			);
 			path = HeroesUITests;
+			sourceTree = "<group>";
+		};
+		7C7D9BE5211457F30073D2DF /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7C7D9BE1211449A60073D2DF /* StateIndicator.swift */,
+				7C7D9BE3211449B60073D2DF /* StateIndicator.xib */,
+				7C56FBB32111C4260083E5B1 /* Utilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

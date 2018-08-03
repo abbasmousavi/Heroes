@@ -21,7 +21,7 @@ class HeroDetailsViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @IBOutlet weak var mainImage: UIImageView!
+    @IBOutlet weak var mainImage: NetworkImageView!
     @IBOutlet weak var storiesView: UIView!
     @IBOutlet weak var eventsView: UIView!
     @IBOutlet weak var comicsView: UIView!

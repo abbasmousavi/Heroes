@@ -32,7 +32,7 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="bKD-Si-whV">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="1583"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b5Z-UA-YuJ">
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="b5Z-UA-YuJ" customClass="NetworkImageView" customModule="Heroes" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="b5Z-UA-YuJ" secondAttribute="height" multiplier="1:1" id="pSG-Kk-tZP"/>

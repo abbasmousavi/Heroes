@@ -11,6 +11,7 @@ import UIKit
 protocol HeroesListViewControllerProtocol: class {
     func userDidSelectedItem(hero:Hero, animationView:UIView?) -> Void;
 }
+
 class HeroesListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -33,15 +34,14 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
         self.configureSearchController()
 
         paginationLoadingIndicator.hidesWhenStopped = true
-        tableView.tableFooterView = paginationLoadingIndicator
         
+        paginationLoadingIndicator.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
+        tableView.tableFooterView = paginationLoadingIndicator
         stateIndicator.startLoading()
         loadHeroes()
         
     }
-    
 
-    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         offset = 0
         heroes = []
@@ -66,8 +66,6 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
 
         service.request(uri:"https://gateway.marvel.com/v1/public/characters", parameters:parameters, offset: 20 * offset) { (models: APIResponse<Hero>) in
     
-        
-        
         let indexPaths = (self.heroes.count..<(self.heroes.count + models.data.results.count)).map { item in
             return IndexPath(item: item, section: 0)
         }
@@ -101,25 +99,17 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
 
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath) as! HeroCell
 
         // Configure the cell...
-        cell.textLabel?.text = heroes[indexPath.row].name
-
-        if let url = heroes[indexPath.row].thumbnail.thumbnailURL {
-        
-        cell.imageView?.image = UIImage(named: "loading")
-        cell.imageView?.setURL(url: url)
-        }
-        
-
+        cell.configure(hero: heroes[indexPath.row])
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        delegate?.userDidSelectedItem(hero: heroes[indexPath.row], animationView: cell?.imageView)
+        let cell = tableView.cellForRow(at: indexPath) as? HeroCell
+        delegate?.userDidSelectedItem(hero: heroes[indexPath.row], animationView: cell?.mainImageView)
         
     }
     
@@ -149,7 +139,5 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
             navigationItem.hidesSearchBarWhenScrolling = false
         }
         self.definesPresentationContext = true;
-
-        
     }
 }
