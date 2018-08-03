@@ -11,18 +11,21 @@ import UIKit
 protocol HeroesListTableViewControllerProtocol: class {
     func userDidSelectedItem(hero:Hero, animationView:UIView?) -> Void;
 }
-class HeroesListTableViewController: UITableViewController {
+class HeroesListTableViewController: UITableViewController, UISearchBarDelegate {
     
     var isDataLoading =  false
     var offset = 0
     let service = Services()
     var heroes = [Hero]()
     weak var delegate: HeroesListTableViewControllerProtocol?
+    let searchController = UISearchController(searchResultsController: nil)
+    var searchBar: UISearchBar { return searchController.searchBar }
         
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        searchBar.delegate = self
         tableView .register(UINib(nibName: "HeroCell", bundle: nil), forCellReuseIdentifier: "HeroCell")
+        self.configureSearchController()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -38,10 +41,27 @@ class HeroesListTableViewController: UITableViewController {
         
     }
     
-    func loadHeroes () {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        offset = 0
+        heroes = []
+        tableView.reloadData()
+        loadHeroes(query: searchBar.text)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        offset = 0
+        heroes = []
+        tableView.reloadData()
+        loadHeroes()
+    }
+    
+    func loadHeroes (query:String? = nil) {
         
         isDataLoading = true
-        service.request(uri:"https://gateway.marvel.com/v1/public/characters", offset: 20 * offset) { (models: APIResponse<Hero>) in
+        
+        let parameters:[String:String] = query == nil ? [:] : ["nameStartsWith" : query!]
+
+        service.request(uri:"https://gateway.marvel.com/v1/public/characters", parameters:parameters, offset: 20 * offset) { (models: APIResponse<Hero>) in
     
         
         
@@ -101,10 +121,25 @@ class HeroesListTableViewController: UITableViewController {
             // When the user has scrolled past the threshold, start requesting
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
                 isDataLoading = true
-                
                 loadHeroes()
             }
         }
+    }
+    
+    func configureSearchController() {
+        searchController.obscuresBackgroundDuringPresentation = false
+        
+        searchBar.text = ""
+        searchBar.showsCancelButton = false
+        searchBar.placeholder = "Enter GitHub Id, e.g., \"scotteg\""
+        
+        if #available(iOS 11.0, *) {
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = false
+        }
+        self.definesPresentationContext = true;
+
+        
     }
 
 

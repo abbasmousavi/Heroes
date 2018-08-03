@@ -13,16 +13,24 @@ class Services {
     
     let session = URLSession(configuration: URLSessionConfiguration.default)
     
-    func request<T> (uri: String, limit:Int = 20, offset:Int = 0, completion: @escaping ((APIResponse<T>) -> Void)) {
+    func request<T> (uri: String, parameters:[String:String] = [:], limit:Int = 20, offset:Int = 0, completion: @escaping ((APIResponse<T>) -> Void)) {
         
         let ts = Int(Date().timeIntervalSince1970)
         let hashableString = "\(ts)" + "925b08d6c60037b1d07a1123b0a80873d5f0da79" + "608dd9c32bcf28c626313e295070623c"
         let hash = hashableString.md5()
-        let authString = "ts=\(ts)&apikey=608dd9c32bcf28c626313e295070623c&hash=" + hash! + "&limit=\(limit)&offset=\(offset)"
+
+        var url = URLComponents(string: uri)!
+        url.queryItems = parameters.map {
+            return URLQueryItem(name: $0.key, value: $0.value)
+        }
+        url.queryItems?.append(URLQueryItem(name: "ts", value: "\(ts)"))
+        url.queryItems?.append(URLQueryItem(name: "apikey", value: "608dd9c32bcf28c626313e295070623c"))
+        url.queryItems?.append(URLQueryItem(name: "hash", value: hash!))
+        url.queryItems?.append(URLQueryItem(name: "limit", value: "\(limit)"))
+        url.queryItems?.append(URLQueryItem(name: "offset", value: "\(offset)"))
         
-        let url = URL(string:uri + "?" + authString)
-        
-        let request = URLRequest(url: url!)
+
+        let request = URLRequest(url: url.url!)
 
         let task = session.dataTask(with: request) { (data, response, error) in
            let model = APIResponse<T>(data: data!)
