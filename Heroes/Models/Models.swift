@@ -15,7 +15,7 @@ protocol Listable {
 
 struct APIResponse<T:Codable>: Codable {
     let code: Int
-    let status, copyright, attributionText, attributionHTML: String
+    let status, copyright, attributionText, attributionHTML: String?
     let etag: String
     let data: ResponseData<T>
 }
