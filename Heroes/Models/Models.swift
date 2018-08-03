@@ -34,7 +34,6 @@ struct Hero: Codable {
     let stories: Stories
     let events: Comics
     let urls: [URLSpecifier]
-    var isFavorite: Bool?
 }
 
 struct Comics: Codable {
@@ -63,15 +62,6 @@ struct StoriesItem: Codable {
     let type: String
 }
 
-//enum ItemType: String, Codable {
-//    case cover = "cover"
-//    case empty = ""
-//    case interiorStory = "interiorStory"
-//    case pinup = "pinup"
-//    case backCover = "backcovers"
-//    case ad = "ad"
-//}
-
 struct Thumbnail: Codable {
     let path: String?
     let pathExtension: String?
@@ -81,11 +71,6 @@ struct Thumbnail: Codable {
         case pathExtension = "extension"
     }
 }
-
-//enum Extension: String, Codable {
-//    case gif = "gif"
-//    case jpg = "jpg"
-//}
 
 struct URLSpecifier: Codable {
     let type: URLType

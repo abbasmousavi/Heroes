@@ -12,13 +12,9 @@ private let reuseIdentifier = "EmbeddedListCell"
 
 class EmbeddedListViewController<T:Codable & Listable>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
+    @IBOutlet weak var stateIndicator: StateIndicator!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
-    @IBOutlet weak var messagesLabel: UILabel!
-    
-    
     private let uri: String
     private var items = [T]()
     private let service = Services()
@@ -48,16 +44,15 @@ class EmbeddedListViewController<T:Codable & Listable>: UIViewController, UIColl
     }
 
     func loadData() {
-        messagesLabel?.isHidden = true
-        messagesLabel?.text = nil
+        stateIndicator.startLoading()
         service.request(uri: uri) { (response: APIResponse<T>) in
             self.items = response.data.results
-            self.activityIndicator.stopAnimating()
+            
             if (self.items.count > 0) {
-            self.collectionView.reloadData()
+                self.stateIndicator.stopLoading()
+                self.collectionView.reloadData()
             } else {
-                self.messagesLabel?.isHidden = false
-                self.messagesLabel?.text = "No items available"
+                self.stateIndicator.stopLoading(message: "No items available")
             }
         }
     }

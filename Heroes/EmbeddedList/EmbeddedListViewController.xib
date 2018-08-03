@@ -11,9 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EmbeddedListViewController" customModule="Heroes" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="Ajk-LB-k5e" id="k9L-ra-diq"/>
                 <outlet property="collectionView" destination="iGu-AP-P2J" id="9fo-42-nEl"/>
-                <outlet property="messagesLabel" destination="sY4-vP-URq" id="6Qz-so-LPC"/>
+                <outlet property="stateIndicator" destination="7U7-X7-Lua" id="ZSf-Mz-ug9"/>
                 <outlet property="titleLabel" destination="Ic4-1E-vfW" id="aOC-fg-odq"/>
                 <outlet property="view" destination="iN0-l3-epB" id="uua-H6-LMm"/>
             </connections>
@@ -37,15 +36,6 @@
                         <outlet property="delegate" destination="-1" id="8oi-b3-I4o"/>
                     </connections>
                 </collectionView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ajk-LB-k5e">
-                    <rect key="frame" x="177.5" y="145" width="20" height="20"/>
-                </activityIndicatorView>
-                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sY4-vP-URq">
-                    <rect key="frame" x="187.5" y="155" width="0.0" height="0.0"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ic4-1E-vfW">
                     <rect key="frame" x="20" y="18" width="44.5" height="15"/>
                     <constraints>
@@ -55,16 +45,18 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7U7-X7-Lua" customClass="StateIndicator" customModule="Heroes" customModuleProvider="target">
+                    <rect key="frame" x="67" y="81" width="240" height="128"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="Ajk-LB-k5e" firstAttribute="centerY" secondItem="iGu-AP-P2J" secondAttribute="centerY" id="1yc-kh-Y9q"/>
                 <constraint firstItem="Ic4-1E-vfW" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="18" id="Bbx-o9-Ifb"/>
                 <constraint firstItem="iGu-AP-P2J" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="JOV-Ug-x1Q"/>
                 <constraint firstItem="iGu-AP-P2J" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="40" id="M3u-Fi-yD8"/>
-                <constraint firstItem="sY4-vP-URq" firstAttribute="centerY" secondItem="iGu-AP-P2J" secondAttribute="centerY" id="WJK-Em-mRU"/>
-                <constraint firstItem="sY4-vP-URq" firstAttribute="centerX" secondItem="iGu-AP-P2J" secondAttribute="centerX" id="WU3-9z-rEw"/>
-                <constraint firstItem="Ajk-LB-k5e" firstAttribute="centerX" secondItem="iGu-AP-P2J" secondAttribute="centerX" id="dc1-iZ-ldj"/>
+                <constraint firstItem="7U7-X7-Lua" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="dLu-cI-IlZ"/>
+                <constraint firstItem="7U7-X7-Lua" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="g1n-jf-dsg"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="iGu-AP-P2J" secondAttribute="trailing" id="mfA-7l-nss"/>
                 <constraint firstItem="iGu-AP-P2J" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="vwi-vm-0ez"/>
                 <constraint firstItem="Ic4-1E-vfW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="w4b-KC-rGB"/>
