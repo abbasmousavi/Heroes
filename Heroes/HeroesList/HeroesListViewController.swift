@@ -19,6 +19,7 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var stateIndicator: StateIndicator!
     var isDataLoading =  false
     var offset = 0
+    var query: String?
     let service = Services()
     var heroes = [Hero]()
     weak var delegate: HeroesListViewControllerProtocol?
@@ -44,6 +45,7 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         offset = 0
+        query = searchBar.text
         heroes = []
         tableView.reloadData()
         stateIndicator.startLoading()
@@ -51,11 +53,15 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        if query != nil {
+        
         offset = 0
+        query = nil
         heroes = []
         tableView.reloadData()
         stateIndicator.startLoading()
         loadHeroes()
+        }
     }
     
     func loadHeroes (query:String? = nil) {
@@ -103,6 +109,7 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
 
         // Configure the cell...
         cell.configure(hero: heroes[indexPath.row])
+        cell.delegate = self
         return cell
     }
     
@@ -123,7 +130,7 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
             if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
                 isDataLoading = true
                 paginationLoadingIndicator.startAnimating()
-                loadHeroes()
+                loadHeroes(query: query)
             }
         }
     }
@@ -140,4 +147,21 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
         }
         self.definesPresentationContext = true;
     }
+}
+
+
+extension HeroesListViewController: HeroCellProtocol {
+    func isFavorite(hero: Hero) -> Bool {
+        return service.store.isInStore(item: hero)
+    }
+    
+    func addFavorite(hero: Hero) {
+        service.store.save(item: hero)
+    }
+    
+    func removeFavorite(hero: Hero) {
+        service.store.remove(item: hero)
+    }
+    
+    
 }

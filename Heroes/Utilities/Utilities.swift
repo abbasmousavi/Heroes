@@ -20,7 +20,8 @@ class NetworkImageView: UIImageView {
         downloadTask?.cancel()
         downloadTask = nil
 
-        if let object = imageCache.object(forKey: url.absoluteString as NSString), object.isKind(of: UIImage.self) {
+        if let object = imageCache.object(forKey: url.absoluteString as NSString),
+               object.isKind(of: UIImage.self) {
 
             self.image = object as? UIImage
         } else {
@@ -55,11 +56,6 @@ class NetworkImageView: UIImageView {
 
             downloadTask?.resume()
         }
-
-
-
-
-
     }
 }
 

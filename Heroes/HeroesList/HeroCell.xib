@@ -25,24 +25,34 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gxw-Qe-d9Y">
-                        <rect key="frame" x="165" y="11" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <rect key="frame" x="163" y="56" width="135" height="21"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBm-H5-dau" customClass="FavoriteButton" customModule="Heroes" customModuleProvider="target">
+                        <rect key="frame" x="297" y="51.5" width="30" height="34"/>
+                        <connections>
+                            <action selector="toggleFavorite:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="rPg-Oy-IhZ"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Gxw-Qe-d9Y" firstAttribute="leading" secondItem="CYB-oh-lVn" secondAttribute="trailing" constant="22" id="zfb-JL-tdw"/>
+                    <constraint firstItem="Gxw-Qe-d9Y" firstAttribute="leading" secondItem="CYB-oh-lVn" secondAttribute="trailing" constant="20" id="zfb-JL-tdw"/>
                 </constraints>
             </tableViewCellContentView>
             <constraints>
+                <constraint firstItem="pBm-H5-dau" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" constant="2" id="2W6-2d-xLO"/>
                 <constraint firstItem="njF-e1-oar" firstAttribute="bottom" secondItem="CYB-oh-lVn" secondAttribute="bottom" constant="5" id="5Fn-eS-lAw"/>
                 <constraint firstItem="CYB-oh-lVn" firstAttribute="leading" secondItem="njF-e1-oar" secondAttribute="leading" constant="20" id="5iR-ul-kkc"/>
                 <constraint firstItem="CYB-oh-lVn" firstAttribute="top" secondItem="njF-e1-oar" secondAttribute="top" constant="5" id="Bey-Sr-DiU"/>
-                <constraint firstItem="Gxw-Qe-d9Y" firstAttribute="top" secondItem="njF-e1-oar" secondAttribute="top" constant="11" id="LUf-1d-yfP"/>
+                <constraint firstItem="Gxw-Qe-d9Y" firstAttribute="centerY" secondItem="njF-e1-oar" secondAttribute="centerY" id="DRc-Yz-u5q"/>
+                <constraint firstItem="njF-e1-oar" firstAttribute="trailing" secondItem="Gxw-Qe-d9Y" secondAttribute="trailing" constant="45" id="SLU-AS-THs"/>
+                <constraint firstItem="njF-e1-oar" firstAttribute="trailing" secondItem="pBm-H5-dau" secondAttribute="trailing" constant="16" id="xTp-da-YZP"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="favoriteButton" destination="pBm-H5-dau" id="mIE-fy-fP2"/>
                 <outlet property="mainImageView" destination="CYB-oh-lVn" id="qCp-Ff-y30"/>
                 <outlet property="titleLabel" destination="Gxw-Qe-d9Y" id="msk-aE-bOy"/>
             </connections>

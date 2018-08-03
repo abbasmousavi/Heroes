@@ -34,6 +34,7 @@ struct Hero: Codable {
     let stories: Stories
     let events: Comics
     let urls: [URLSpecifier]
+    var isFavorite: Bool?
 }
 
 struct Comics: Codable {
@@ -172,6 +173,15 @@ extension Hero {
         guard let data = self.jsonData else { return nil }
         return String(data: data, encoding: .utf8)
     }
+}
+
+extension Hero: Equatable {
+    static func == (lhs: Hero, rhs: Hero) -> Bool {
+        
+        return lhs.id == rhs.id
+    }
+    
+    
 }
 
 extension Comics {

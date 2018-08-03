@@ -12,6 +12,7 @@ import Foundation
 class Services {
     
     let session = URLSession(configuration: URLSessionConfiguration.default)
+    let store = FileStore()
     
     func request<T> (uri: String, parameters:[String:String] = [:], limit:Int = 20, offset:Int = 0, completion: @escaping ((APIResponse<T>) -> Void)) {
         
