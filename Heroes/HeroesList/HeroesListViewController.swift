@@ -70,13 +70,18 @@ class HeroesListViewController: UIViewController, UITableViewDelegate, UITableVi
         
         let parameters:[String:String] = query == nil ? [:] : ["nameStartsWith" : query!]
 
-        service.request(uri:"https://gateway.marvel.com/v1/public/characters", parameters:parameters, offset: 20 * offset) { (models: APIResponse<Hero>) in
-    
-        let indexPaths = (self.heroes.count..<(self.heroes.count + models.data.results.count)).map { item in
+        service.request(uri:"https://gateway.marvel.com/v1/public/characters", parameters:parameters, offset: 20 * offset) { (result: Result<Hero>) in
+            
+            guard result.isSuccess else {
+                self.stateIndicator.stopLoading(error: result.error!)
+                return
+            }
+            
+            let indexPaths = (self.heroes.count..<(self.heroes.count + result.value!.data.results.count)).map { item in
             return IndexPath(item: item, section: 0)
         }
             
-            self.heroes.append(contentsOf: models.data.results)
+            self.heroes.append(contentsOf: result.value!.data.results)
             
             if (self.heroes.count > 0) {
                 self.stateIndicator.stopLoading()

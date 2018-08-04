@@ -68,7 +68,7 @@ class StateIndicator: UIView {
         self.isHidden = false
     }
     
-    func stopLoading(error: NSError) {
+    func stopLoading(error: Error) {
         activityIndicator.stopAnimating()
         messagesLabel.text = error.localizedDescription
         messagesLabel.isHidden = false

@@ -45,8 +45,8 @@ struct Comics: Codable {
 
 struct Comic: Codable, Listable {
     let resourceURI: String
-    let name: String? //
-    var title: String? //
+    let name: String?
+    var title: String?
     var thumbnail: Thumbnail?
 }
 
@@ -86,31 +86,10 @@ enum URLType: String, Codable {
 // MARK: Convenience initializers
 
 extension APIResponse {
-    init?(data: Data) {
-        
-        do {
+    
+    init(data: Data) throws {
         let me = try JSONDecoder().decode(APIResponse.self, from: data)
         self = me
-        } catch {
-            print (error)
-            return nil
-        }
-    }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
     }
 }
 

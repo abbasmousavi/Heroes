@@ -45,8 +45,8 @@ class EmbeddedListViewController<T:Codable & Listable>: UIViewController, UIColl
 
     func loadData() {
         stateIndicator.startLoading()
-        service.request(uri: uri) { (response: APIResponse<T>) in
-            self.items = response.data.results
+        service.request(uri: uri) { (result: Result<T>) in
+            self.items = result.value!.data.results
             
             if (self.items.count > 0) {
                 self.stateIndicator.stopLoading()

@@ -31,8 +31,9 @@
 		7C56FBB42111C4260083E5B1 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C56FBB32111C4260083E5B1 /* Utilities.swift */; };
 		7C7D9BE2211449A60073D2DF /* StateIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D9BE1211449A60073D2DF /* StateIndicator.swift */; };
 		7C7D9BE4211449B60073D2DF /* StateIndicator.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C7D9BE3211449B60073D2DF /* StateIndicator.xib */; };
-		7C7D9BE721148D820073D2DF /* FavoritesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D9BE621148D810073D2DF /* FavoritesStore.swift */; };
+		7C7D9BE721148D820073D2DF /* FileStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D9BE621148D810073D2DF /* FileStore.swift */; };
 		7C7D9BE9211501C30073D2DF /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D9BE8211501C30073D2DF /* FavoriteButton.swift */; };
+		7C7D9BEB211537A70073D2DF /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7D9BEA211537A70073D2DF /* Result.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,8 +85,9 @@
 		7C56FBB32111C4260083E5B1 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		7C7D9BE1211449A60073D2DF /* StateIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateIndicator.swift; sourceTree = "<group>"; };
 		7C7D9BE3211449B60073D2DF /* StateIndicator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StateIndicator.xib; sourceTree = "<group>"; };
-		7C7D9BE621148D810073D2DF /* FavoritesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesStore.swift; sourceTree = "<group>"; };
+		7C7D9BE621148D810073D2DF /* FileStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStore.swift; sourceTree = "<group>"; };
 		7C7D9BE8211501C30073D2DF /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FavoriteButton.swift; path = Heroes/Utilities/FavoriteButton.swift; sourceTree = SOURCE_ROOT; };
+		7C7D9BEA211537A70073D2DF /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				7C56FBB02111C2390083E5B1 /* Services.swift */,
-				7C7D9BE621148D810073D2DF /* FavoritesStore.swift */,
+				7C7D9BE621148D810073D2DF /* FileStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -156,6 +158,7 @@
 		7C4226772113CBFA003F4875 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				7C7D9BEA211537A70073D2DF /* Result.swift */,
 				7C26F8762111CB6B00E5F876 /* Models.swift */,
 			);
 			path = Models;
@@ -373,8 +376,9 @@
 				7C56FB852111C1F10083E5B1 /* ViewController.swift in Sources */,
 				7C7D9BE2211449A60073D2DF /* StateIndicator.swift in Sources */,
 				7C7D9BE9211501C30073D2DF /* FavoriteButton.swift in Sources */,
-				7C7D9BE721148D820073D2DF /* FavoritesStore.swift in Sources */,
+				7C7D9BE721148D820073D2DF /* FileStore.swift in Sources */,
 				7C42266021130A67003F4875 /* HeroListToDetailsTransition.swift in Sources */,
+				7C7D9BEB211537A70073D2DF /* Result.swift in Sources */,
 				7C56FBB12111C2390083E5B1 /* Services.swift in Sources */,
 				7C56FBB42111C4260083E5B1 /* Utilities.swift in Sources */,
 				7C56FB832111C1F10083E5B1 /* AppDelegate.swift in Sources */,
