@@ -9,25 +9,25 @@
 import Foundation
 
 protocol Store {
-    associatedtype T:Equatable
-    func save(item:T)
-    func remove(item:T)
-    func isInStore(item:T) -> Bool
+    
+    func save(_ item:Hero)
+    func remove(_ item:Hero)
+    func isInStore(_ item:Hero) -> Bool
 }
 
 class FileStore: Store {
     
     var store = [Int:Hero]()
     
-    func save(item:Hero)  {
+    func save(_ item:Hero)  {
         store[item.id] = item
     }
     
-    func remove(item:Hero)  {
+    func remove(_ item:Hero)  {
         store.removeValue(forKey: item.id)
     }
     
-    func isInStore(item:Hero) -> Bool {
+    func isInStore(_ item:Hero) -> Bool {
         return store[item.id] != nil
     }
 }

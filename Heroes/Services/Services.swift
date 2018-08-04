@@ -15,7 +15,13 @@ let privateKey = "925b08d6c60037b1d07a1123b0a80873d5f0da79"
 class Services {
     
     let session = URLSession(configuration: URLSessionConfiguration.default)
-    let store = FileStore()
+    let store: Store
+    
+    init (store: Store) {
+        self.store = store
+    }
+    
+
     
         func request<T> (uri: String, parameters:[String:String] = [:], limit:Int = 20, offset:Int = 0, completion: @escaping ((Result<T>) -> Void)) {
         

@@ -14,6 +14,7 @@
                 <outlet property="comicsView" destination="kAy-ir-DuT" id="bBE-k6-Khj"/>
                 <outlet property="descriptionLabel" destination="O4P-am-BAV" id="Xzp-ge-Gvo"/>
                 <outlet property="eventsView" destination="zpi-dA-Ixd" id="icq-CR-EMc"/>
+                <outlet property="favoriteButton" destination="Tsx-gN-yoi" id="Bm0-40-tpU"/>
                 <outlet property="mainImage" destination="b5Z-UA-YuJ" id="ynQ-7T-c1X"/>
                 <outlet property="seriesView" destination="vSh-B8-uWb" id="tKa-Jv-tv1"/>
                 <outlet property="storiesView" destination="F6T-iY-Tya" id="VRi-Xe-pYS"/>
@@ -59,6 +60,9 @@
                                                 <constraint firstAttribute="width" constant="44" id="Yew-h3-e8Q"/>
                                                 <constraint firstAttribute="height" constant="44" id="eju-MG-XNe"/>
                                             </constraints>
+                                            <connections>
+                                                <action selector="toggleFavorite:" destination="-1" eventType="touchUpInside" id="Uvh-kM-rPo"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

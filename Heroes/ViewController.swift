@@ -19,13 +19,13 @@ class ViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let vc = HeroesListViewController()
-        let nv = NavigationController(rootViewController: vc)
-        vc.delegate = nv
-        self.present(nv, animated: true, completion: nil)
-    }
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        let vc = HeroesListViewController()
+//        let nv = NavigationController(rootViewController: vc)
+//        vc.delegate = nv
+//        self.present(nv, animated: true, completion: nil)
+//    }
 
 
 }

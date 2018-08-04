@@ -187,15 +187,15 @@
 		7C56FB812111C1F10083E5B1 /* Heroes */ = {
 			isa = PBXGroup;
 			children = (
-				7C4226732113CB46003F4875 /* EmbeddedList */,
-				7C4226742113CB63003F4875 /* HeroDetails */,
+				7C56FB822111C1F10083E5B1 /* AppDelegate.swift */,
+				7C42266121130B18003F4875 /* NavigationController.swift */,
 				7C4226752113CB8B003F4875 /* HeroesList */,
+				7C4226742113CB63003F4875 /* HeroDetails */,
+				7C4226732113CB46003F4875 /* EmbeddedList */,
 				7C42265F21130A67003F4875 /* HeroListToDetailsTransition.swift */,
 				7C4226762113CBC8003F4875 /* Services */,
 				7C4226772113CBFA003F4875 /* Models */,
 				7C56FB892111C1F30083E5B1 /* Assets.xcassets */,
-				7C42266121130B18003F4875 /* NavigationController.swift */,
-				7C56FB822111C1F10083E5B1 /* AppDelegate.swift */,
 				7C7D9BE5211457F30073D2DF /* Utilities */,
 				7C56FB842111C1F10083E5B1 /* ViewController.swift */,
 				7C56FBB22111C4030083E5B1 /* Heroes-Bridging-Header.h */,

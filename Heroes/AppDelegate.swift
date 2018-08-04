@@ -13,10 +13,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         window?.tintColor = .red
+        window?.rootViewController = NavigationController(service: Services(store: FileStore()))
+        window?.makeKeyAndVisible()
         return true
     }
 
