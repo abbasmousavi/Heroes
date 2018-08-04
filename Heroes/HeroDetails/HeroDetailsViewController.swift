@@ -42,7 +42,7 @@ class HeroDetailsViewController: UIViewController {
         if let url = hero.thumbnail.thumbnailURL {
             mainImage?.setURL(url: url)
         }
-        
+
         favoriteButton.isFavorite = service.store.isInStore(hero)
 
         titleLabel?.text = hero.name
@@ -63,14 +63,14 @@ class HeroDetailsViewController: UIViewController {
     }
 
     @IBAction func toggleFavorite(_ sender: Any) {
-        
+
         if favoriteButton.isFavorite {
-            service.store.save(hero)
+            service.store.remove(hero)
             favoriteButton.isFavorite = false
         } else {
-             service.store.remove(hero)
+            service.store.save(hero)
             favoriteButton.isFavorite = true
         }
-        
+
     }
 }

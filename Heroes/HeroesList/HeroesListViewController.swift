@@ -41,13 +41,17 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
         tableView.register(UINib(nibName: "HeroCell", bundle: nil), forCellReuseIdentifier: "HeroCell")
         self.title = "Characters"
         self.configureSearchController()
-
         paginationLoadingIndicator.hidesWhenStopped = true
-
-        paginationLoadingIndicator.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
         tableView.tableFooterView = paginationLoadingIndicator
         stateIndicator.startLoading()
         loadHeroes()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -74,11 +78,10 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
     func loadHeroes (query: String? = nil) {
 
         isDataLoading = true
-
         let parameters: [String: String] = query == nil ? [:] : ["nameStartsWith": query!]
-
         service.request(uri: "https://gateway.marvel.com/v1/public/characters", parameters: parameters, offset: 20 * offset) { (result: Result<Hero>) in
 
+            self.isDataLoading = false
             guard result.isSuccess else {
                 self.stateIndicator.stopLoading(error: result.error!)
                 return
@@ -97,7 +100,7 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
             }
             self.tableView.insertRows(at: indexPaths, with: .none)
             self.offset += 1
-            self.isDataLoading = false
+
             self.paginationLoadingIndicator.stopAnimating()
         }
     }
@@ -133,19 +136,15 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
 extension HeroesListViewController: UITableViewDelegate, UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return heroes.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath) as! HeroCell
-
-        // Configure the cell...
         cell.configure(hero: heroes[indexPath.row])
         cell.delegate = self
         return cell
