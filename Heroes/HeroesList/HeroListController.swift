@@ -41,8 +41,8 @@ class HeroListController: UITableViewController {
         tableView.rowHeight = 70
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.reloadRows(at: [indexPath], with: .none)
         }
