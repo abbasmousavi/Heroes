@@ -12,20 +12,17 @@ protocol HeroesListViewControllerProtocol: class {
     func userDidSelectedItem(hero: Hero) -> Void;
 }
 
-class HeroesListViewController: UIViewController, UISearchBarDelegate {
+class HeroesListViewController: UIViewController, UITableViewDelegate {
 
-    @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var stateIndicator: StateIndicator!
-    private var isDataLoading = false
-    private var offset = 0
-    private var query: String?
-    private let service: Services
-    private var heroes = [Hero]()
-    weak var delegate: HeroesListViewControllerProtocol?
+    private var listController = HeroListController(style: .plain)
     private let searchController = UISearchController(searchResultsController: nil)
     private var searchBar: UISearchBar { return searchController.searchBar }
-    private let paginationLoadingIndicator = UIActivityIndicatorView(style: .gray)
-    private var selectedIndexPath: IndexPath? = nil
+    @IBOutlet private weak var stateIndicator: StateIndicator!
+    private let service: Services
+    private var isDataLoading = false
+    weak var delegate: HeroesListViewControllerProtocol?
+    private var offset = 0
+    private var query: String?
 
     init(service: Services) {
         self.service = service
@@ -38,47 +35,20 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
-        tableView.register(UINib(nibName: "HeroCell", bundle: nil), forCellReuseIdentifier: "HeroCell")
-        self.title = "Characters"
         self.configureSearchController()
-        paginationLoadingIndicator.hidesWhenStopped = true
-        tableView.tableFooterView = paginationLoadingIndicator
+        addChild(listController, in: view)
+        view.sendSubview(toBack: listController.view)
+        listController.tableView.delegate = self
+        listController.cellDelegate = self
+        self.title = "Characters"
+        searchBar.delegate = self
         stateIndicator.startLoading()
         loadHeroes()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if let indexPath = tableView.indexPathForSelectedRow {
-            tableView.reloadRows(at: [indexPath], with: .none)
-        }
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        offset = 0
-        query = searchBar.text
-        heroes = []
-        tableView.reloadData()
-        stateIndicator.startLoading()
-        loadHeroes(query: searchBar.text)
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        if query != nil {
-
-            offset = 0
-            query = nil
-            heroes = []
-            tableView.reloadData()
-            stateIndicator.startLoading()
-            loadHeroes()
-        }
-    }
-
     func loadHeroes (query: String? = nil) {
-
-        isDataLoading = true
+        
+       isDataLoading = true
         let parameters: [String: String] = query == nil ? [:] : ["nameStartsWith": query!]
         service.request(uri: "https://gateway.marvel.com/v1/public/characters", parameters: parameters, offset: 20 * offset) { (result: Result<Hero>) in
 
@@ -88,39 +58,36 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
                 return
             }
 
-            let indexPaths = (self.heroes.count..<(self.heroes.count + result.value!.data.results.count)).map { item in
-                return IndexPath(item: item, section: 0)
-            }
+            self.listController.appendToList((result.value?.data.results)!)
 
-            self.heroes.append(contentsOf: result.value!.data.results)
-
-            if (self.heroes.count > 0) {
+            if (self.listController.heroes.count > 0) {
                 self.stateIndicator.stopLoading()
             } else {
                 self.stateIndicator.stopLoading(message: "No items available")
             }
-            self.tableView.insertRows(at: indexPaths, with: .none)
+            
             self.offset += 1
 
-            self.paginationLoadingIndicator.stopAnimating()
+            //self.paginationLoadingIndicator.stopAnimating()
         }
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (!isDataLoading) {
+//            // Calculate the position of one screen length before the bottom of the results
+//            let scrollViewContentHeight = tableView.contentSize.height
+//            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+//
+//            // When the user has scrolled past the threshold, start requesting
+//            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+//                isDataLoading = true
+//                paginationLoadingIndicator.startAnimating()
+//                loadHeroes(query: query)
+//            }
+//        }
+//    }
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (!isDataLoading) {
-            // Calculate the position of one screen length before the bottom of the results
-            let scrollViewContentHeight = tableView.contentSize.height
-            let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
-
-            // When the user has scrolled past the threshold, start requesting
-            if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
-                isDataLoading = true
-                paginationLoadingIndicator.startAnimating()
-                loadHeroes(query: query)
-            }
-        }
-    }
-
+    
     func configureSearchController() {
         searchController.obscuresBackgroundDuringPresentation = false
         searchBar.text = ""
@@ -132,31 +99,17 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
         }
         self.definesPresentationContext = true;
     }
-}
-
-extension HeroesListViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return heroes.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath) as! HeroCell
-        cell.configure(hero: heroes[indexPath.row])
-        cell.delegate = self
-        return cell
-    }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            delegate?.userDidSelectedItem(hero: heroes[indexPath.row])
+        delegate?.userDidSelectedItem(hero: listController.heroes[indexPath.row])
     }
+
+
+
 }
 
 extension HeroesListViewController: HeroCellProtocol {
+    
     func isFavorite(_ hero: Hero) -> Bool {
         return service.store.isInStore(hero)
     }
@@ -170,14 +123,50 @@ extension HeroesListViewController: HeroCellProtocol {
     }
 }
 
-extension HeroesListViewController: SourceOrDestinationOfAnimatedTransition {
-    func view() -> UIView {
+extension HeroesListViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//        offset = 0
+//        query = searchBar.text
+//        heroes = []
+//        tableView.reloadData()
+        //        stateIndicator.startLoading()
+        //        loadHeroes(query: searchBar.text)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        //        if query != nil {
+        //
+        //            offset = 0
+        //            query = nil
+        //            heroes = []
+        //            tableView.reloadData()
+        //            stateIndicator.startLoading()
+        //            loadHeroes()
+        //        }
+    }
+}
 
-        if let indexPath = tableView.indexPathForSelectedRow,
-            let cell = tableView.cellForRow(at: indexPath) as? HeroCell {
+extension HeroesListViewController: SourceOfAnimatedTransition {
+    func sourceView() -> UIView {
+
+        if let indexPath = listController.selectedIndexPath,
+            let cell = listController.tableView.cellForRow(at: indexPath) as? HeroCell {
             return cell.mainImageView
         } else {
             return self.view
         }
     }
 }
+
+extension HeroesListViewController: DestinationOfAnimatedTransition {
+    func destinationView() -> UIView {
+
+        if let indexPath = listController.selectedIndexPath,
+            let cell = listController.tableView.cellForRow(at: indexPath) as? HeroCell {
+            return cell.mainImageView
+        } else {
+            return self.view
+        }
+
+    }}

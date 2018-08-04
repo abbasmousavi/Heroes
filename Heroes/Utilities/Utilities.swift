@@ -64,14 +64,14 @@ extension UIViewController {
 
     func addChild(_ viewController: UIViewController, in container: UIView) {
 
-        addChild(viewController)
+        addChildViewController(viewController)
         container.addSubview(viewController.view)
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         viewController.view.topAnchor.constraint(equalTo: container.topAnchor).isActive = true
         viewController.view.bottomAnchor.constraint(equalTo: container.bottomAnchor).isActive = true
         viewController.view.leadingAnchor.constraint(equalTo: container.leadingAnchor).isActive = true
         viewController.view.trailingAnchor.constraint(equalTo: container.trailingAnchor).isActive = true
-        viewController.didMove(toParent: self)
+        viewController.didMove(toParentViewController: self)
     }
 }
 

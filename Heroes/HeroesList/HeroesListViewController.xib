@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.3.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +12,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="HeroesListViewController" customModule="Heroes" customModuleProvider="target">
             <connections>
                 <outlet property="stateIndicator" destination="cqB-y4-Hhc" id="byi-00-MMM"/>
-                <outlet property="tableView" destination="JYg-Zo-9od" id="ARZ-X8-0Ap"/>
                 <outlet property="view" destination="z1V-55-gED" id="XGa-Cw-CEt"/>
             </connections>
         </placeholder>
@@ -21,14 +20,6 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="70" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="70" translatesAutoresizingMaskIntoConstraints="NO" id="JYg-Zo-9od">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="NVX-HZ-OtD"/>
-                        <outlet property="delegate" destination="-1" id="0K2-0N-dOl"/>
-                    </connections>
-                </tableView>
                 <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cqB-y4-Hhc" customClass="StateIndicator" customModule="Heroes" customModuleProvider="target">
                     <rect key="frame" x="67" y="269" width="240" height="128"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -36,12 +27,8 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="JYg-Zo-9od" firstAttribute="leading" secondItem="OkO-eL-Epo" secondAttribute="leading" id="Rfb-gL-2de"/>
-                <constraint firstItem="OkO-eL-Epo" firstAttribute="bottom" secondItem="JYg-Zo-9od" secondAttribute="bottom" id="Xnu-Xy-vyu"/>
                 <constraint firstItem="cqB-y4-Hhc" firstAttribute="centerX" secondItem="OkO-eL-Epo" secondAttribute="centerX" id="bDc-yD-iIE"/>
-                <constraint firstItem="OkO-eL-Epo" firstAttribute="trailing" secondItem="JYg-Zo-9od" secondAttribute="trailing" id="dcw-Um-uah"/>
                 <constraint firstItem="cqB-y4-Hhc" firstAttribute="centerY" secondItem="OkO-eL-Epo" secondAttribute="centerY" id="iMJ-IO-TNC"/>
-                <constraint firstItem="OkO-eL-Epo" firstAttribute="top" secondItem="JYg-Zo-9od" secondAttribute="top" id="tWb-0Z-xwL"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="OkO-eL-Epo"/>
             <point key="canvasLocation" x="620" y="136.28185907046478"/>

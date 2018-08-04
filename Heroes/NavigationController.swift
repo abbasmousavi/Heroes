@@ -30,18 +30,18 @@ class NavigationController: UINavigationController, UIViewControllerTransitionin
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
-        if let source = topViewController as? SourceOrDestinationOfAnimatedTransition,
-            let destination = presented as? SourceOrDestinationOfAnimatedTransition {
-            return HeroListToDetailsTransition(source: source, destination: destination)
+        if let source = topViewController as? SourceOfAnimatedTransition,
+            let destination = presented as? DestinationOfAnimatedTransition {
+            return AnimatedTransition(source: source, destination: destination)
         }
         return nil
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
-        if let source = dismissed as? SourceOrDestinationOfAnimatedTransition,
-            let destination = topViewController as? SourceOrDestinationOfAnimatedTransition {
-            return HeroDetailsTolistTransition(source: source, destination: destination)
+        if let source = dismissed as? SourceOfAnimatedTransition,
+            let destination = topViewController as? DestinationOfAnimatedTransition {
+            return ReverseAnimatedTransition(source: source, destination: destination)
         }
         return nil
     }

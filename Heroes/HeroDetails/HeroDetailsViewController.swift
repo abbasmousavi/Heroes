@@ -74,8 +74,14 @@ class HeroDetailsViewController: UIViewController {
     }
 }
 
-extension HeroDetailsViewController: SourceOrDestinationOfAnimatedTransition {
-    func view() -> UIView {
+extension HeroDetailsViewController: SourceOfAnimatedTransition {
+    func sourceView() -> UIView {
+        return mainImage
+    }
+}
+
+extension HeroDetailsViewController: DestinationOfAnimatedTransition {
+    func destinationView() -> UIView {
         return mainImage
     }
 }
