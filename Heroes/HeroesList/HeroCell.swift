@@ -18,7 +18,7 @@ class HeroCell: UITableViewCell {
 
     @IBOutlet private weak var favoriteButton: FavoriteButton!
     @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var mainImageView: NetworkImageView!
+    @IBOutlet weak var mainImageView: NetworkImageView!
     private var hero: Hero?
     weak var delegate: HeroCellProtocol?
 
@@ -54,11 +54,5 @@ class HeroCell: UITableViewCell {
             delegate?.addFavorite(hero!)
             favoriteButton.isFavorite = true
         }
-    }
-}
-
-extension HeroCell: SourceOfAnimatedTransition {
-    func view() -> UIView {
-        return mainImageView
     }
 }

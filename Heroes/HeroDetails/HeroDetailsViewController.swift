@@ -10,8 +10,16 @@ import UIKit
 
 class HeroDetailsViewController: UIViewController {
 
-    let hero: Hero
-    let service: Services
+    @IBOutlet private weak var mainImage: NetworkImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var favoriteButton: FavoriteButton!
+    @IBOutlet private weak var storiesView: UIView!
+    @IBOutlet private weak var eventsView: UIView!
+    @IBOutlet private weak var comicsView: UIView!
+    @IBOutlet private weak var seriesView: UIView!
+    private let hero: Hero
+    private let service: Services
 
     init(service: Services, hero: Hero) {
         self.hero = hero
@@ -22,15 +30,6 @@ class HeroDetailsViewController: UIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    @IBOutlet weak var mainImage: NetworkImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var favoriteButton: FavoriteButton!
-    @IBOutlet weak var storiesView: UIView!
-    @IBOutlet weak var eventsView: UIView!
-    @IBOutlet weak var comicsView: UIView!
-    @IBOutlet weak var seriesView: UIView!
 
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -72,5 +71,11 @@ class HeroDetailsViewController: UIViewController {
             favoriteButton.isFavorite = true
         }
 
+    }
+}
+
+extension HeroDetailsViewController: SourceOrDestinationOfAnimatedTransition {
+    func view() -> UIView {
+        return mainImage
     }
 }

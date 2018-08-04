@@ -10,22 +10,22 @@ import UIKit
 
 protocol HeroesListViewControllerProtocol: class {
     func userDidSelectedItem(hero: Hero) -> Void;
-    func setTransitionSourceView(_ source: SourceOfAnimatedTransition) -> Void;
 }
 
 class HeroesListViewController: UIViewController, UISearchBarDelegate {
 
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var stateIndicator: StateIndicator!
-    var isDataLoading = false
-    var offset = 0
-    var query: String?
-    let service: Services
-    var heroes = [Hero]()
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var stateIndicator: StateIndicator!
+    private var isDataLoading = false
+    private var offset = 0
+    private var query: String?
+    private let service: Services
+    private var heroes = [Hero]()
     weak var delegate: HeroesListViewControllerProtocol?
-    let searchController = UISearchController(searchResultsController: nil)
-    var searchBar: UISearchBar { return searchController.searchBar }
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var searchBar: UISearchBar { return searchController.searchBar }
     private let paginationLoadingIndicator = UIActivityIndicatorView(style: .gray)
+    private var selectedIndexPath: IndexPath? = nil
 
     init(service: Services) {
         self.service = service
@@ -47,7 +47,7 @@ class HeroesListViewController: UIViewController, UISearchBarDelegate {
         stateIndicator.startLoading()
         loadHeroes()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let indexPath = tableView.indexPathForSelectedRow {
@@ -152,10 +152,7 @@ extension HeroesListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? HeroCell {
-        delegate?.setTransitionSourceView(cell)
-        delegate?.userDidSelectedItem(hero: heroes[indexPath.row])
-        }
+            delegate?.userDidSelectedItem(hero: heroes[indexPath.row])
     }
 }
 
@@ -170,5 +167,17 @@ extension HeroesListViewController: HeroCellProtocol {
 
     func removeFavorite(_ hero: Hero) {
         service.store.remove(hero)
+    }
+}
+
+extension HeroesListViewController: SourceOrDestinationOfAnimatedTransition {
+    func view() -> UIView {
+
+        if let indexPath = tableView.indexPathForSelectedRow,
+            let cell = tableView.cellForRow(at: indexPath) as? HeroCell {
+            return cell.mainImageView
+        } else {
+            return self.view
+        }
     }
 }

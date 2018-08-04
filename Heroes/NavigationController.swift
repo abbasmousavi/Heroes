@@ -10,7 +10,6 @@ import UIKit
 
 class NavigationController: UINavigationController, UIViewControllerTransitioningDelegate {
 
-    private var animationSourceForListToDetailTransition: SourceOfAnimatedTransition?
     private let service: Services
 
     init (service: Services) {
@@ -31,25 +30,27 @@ class NavigationController: UINavigationController, UIViewControllerTransitionin
 
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 
-        return animationSourceForListToDetailTransition != nil ?
-        HeroListToDetailsTransition(animationSource: animationSourceForListToDetailTransition!): nil
+        if let source = topViewController as? SourceOrDestinationOfAnimatedTransition,
+            let destination = presented as? SourceOrDestinationOfAnimatedTransition {
+            return HeroListToDetailsTransition(source: source, destination: destination)
+        }
+        return nil
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return animationSourceForListToDetailTransition != nil ?
-        HeroDetailsTolistTransition(animationSource: animationSourceForListToDetailTransition!): nil
+
+        if let source = dismissed as? SourceOrDestinationOfAnimatedTransition,
+            let destination = topViewController as? SourceOrDestinationOfAnimatedTransition {
+            return HeroDetailsTolistTransition(source: source, destination: destination)
+        }
+        return nil
     }
 }
-
 extension NavigationController: HeroesListViewControllerProtocol {
 
     func userDidSelectedItem(hero: Hero) {
         let vc = HeroDetailsViewController(service: service, hero: hero)
         vc.transitioningDelegate = self
         present(vc, animated: true, completion: nil)
-    }
-
-    func setTransitionSourceView(_ source: SourceOfAnimatedTransition) {
-        animationSourceForListToDetailTransition = source
     }
 }
