@@ -48,8 +48,8 @@ class NavigationController: UINavigationController, UIViewControllerTransitionin
 }
 extension NavigationController: HeroesListViewControllerProtocol {
 
-    func userDidSelectedItem(hero: Hero) {
-        let vc = HeroDetailsViewController(service: service, hero: hero)
+    func userDidSelectItem(_ item: Hero) {
+        let vc = HeroDetailsViewController(service: service, hero: item)
         vc.transitioningDelegate = self
         present(vc, animated: true, completion: nil)
     }
