@@ -9,12 +9,17 @@
 import Foundation
 import UIKit
 
+protocol SourceOfAnimatedTransition {
+    func view () -> UIView
+}
+
 class HeroListToDetailsTransition: NSObject, UIViewControllerAnimatedTransitioning  {
     
-    private var animationData: UIView?
-    init(animationData: UIView?) {
-        self.animationData = animationData
+    private var animationSource: SourceOfAnimatedTransition
+    init(animationSource: SourceOfAnimatedTransition) {
+        self.animationSource = animationSource
     }
+    
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
@@ -30,9 +35,9 @@ class HeroListToDetailsTransition: NSObject, UIViewControllerAnimatedTransitioni
         containerView.addSubview(toViewController.view)
         containerView.sendSubviewToBack(toViewController.view)
         
-       let pit = animationData?.resizableSnapshotView(from: animationData!.bounds, afterScreenUpdates: false, withCapInsets: UIEdgeInsets.zero)
+       let pit = animationSource.view().resizableSnapshotView(from: animationSource.view().bounds, afterScreenUpdates: false, withCapInsets: UIEdgeInsets.zero)
         
-        pit?.frame = fromViewController.view.convert(animationData!.frame, from:animationData!.superview)
+        pit?.frame = fromViewController.view.convert(animationSource.view().frame, from:animationSource.view().superview)
        containerView.addSubview(pit!)
         
         
@@ -55,9 +60,9 @@ class HeroListToDetailsTransition: NSObject, UIViewControllerAnimatedTransitioni
 
 class HeroDetailsTolistTransition: NSObject, UIViewControllerAnimatedTransitioning  {
     
-    private var animationData: UIView?
-    init(animationData: UIView?) {
-        self.animationData = animationData
+    private var animationSource: SourceOfAnimatedTransition
+    init(animationSource: SourceOfAnimatedTransition) {
+        self.animationSource = animationSource
     }
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
@@ -81,7 +86,7 @@ class HeroDetailsTolistTransition: NSObject, UIViewControllerAnimatedTransitioni
         pit?.frame = fromViewController.mainImage.frame
         
 
-        let frame = toViewController.view.convert(animationData!.frame, from:animationData!.superview)
+        let frame = toViewController.view.convert(animationSource.view().frame, from:animationSource.view().superview)
 
         fromViewController.view.removeFromSuperview()
 

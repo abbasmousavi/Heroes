@@ -11,6 +11,7 @@ import ImageIO
 import Foundation
 
 let imageCache = NSCache<NSString, AnyObject>()
+let marvelRedColor = UIColor(red:0.92, green:0.11, blue:0.13, alpha:1.00)
 
 class NetworkImageView: UIImageView {
     var downloadTask: URLSessionDataTask?

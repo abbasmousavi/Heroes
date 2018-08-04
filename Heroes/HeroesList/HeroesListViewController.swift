@@ -9,7 +9,8 @@
 import UIKit
 
 protocol HeroesListViewControllerProtocol: class {
-    func userDidSelectedItem(hero: Hero, animationView: UIView?) -> Void;
+    func userDidSelectedItem(hero: Hero) -> Void;
+    func setTransitionSourceView(_ source: SourceOfAnimatedTransition) -> Void;
 }
 
 class HeroesListViewController: UIViewController, UISearchBarDelegate {
@@ -151,21 +152,23 @@ extension HeroesListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as? HeroCell
-        delegate?.userDidSelectedItem(hero: heroes[indexPath.row], animationView: cell?.mainImageView)
+        if let cell = tableView.cellForRow(at: indexPath) as? HeroCell {
+        delegate?.setTransitionSourceView(cell)
+        delegate?.userDidSelectedItem(hero: heroes[indexPath.row])
+        }
     }
 }
 
 extension HeroesListViewController: HeroCellProtocol {
-    func isFavorite(hero: Hero) -> Bool {
+    func isFavorite(_ hero: Hero) -> Bool {
         return service.store.isInStore(hero)
     }
 
-    func addFavorite(hero: Hero) {
+    func addFavorite(_ hero: Hero) {
         service.store.save(hero)
     }
 
-    func removeFavorite(hero: Hero) {
+    func removeFavorite(_ hero: Hero) {
         service.store.remove(hero)
     }
 }
