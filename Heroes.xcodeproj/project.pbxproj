@@ -13,6 +13,7 @@
 		7C069FFB2111D24E00E65B32 /* HeroCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C069FF92111D24E00E65B32 /* HeroCell.xib */; };
 		7C0BBDE821172BE2000791F1 /* FileStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BBDE721172BE2000791F1 /* FileStoreTests.swift */; };
 		7C0BBDEA21172D2D000791F1 /* TestData.json in Resources */ = {isa = PBXBuildFile; fileRef = 7C0BBDE921172D2D000791F1 /* TestData.json */; };
+		7C0BBDEC21173678000791F1 /* TestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0BBDEB21173678000791F1 /* TestUtilities.swift */; };
 		7C26F8772111CB6B00E5F876 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C26F8762111CB6B00E5F876 /* Models.swift */; };
 		7C42265D21130A3C003F4875 /* HeroDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C42265B21130A3C003F4875 /* HeroDetailsViewController.swift */; };
 		7C42265E21130A3C003F4875 /* HeroDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7C42265C21130A3C003F4875 /* HeroDetailsViewController.xib */; };
@@ -60,6 +61,7 @@
 		7C069FF92111D24E00E65B32 /* HeroCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeroCell.xib; sourceTree = "<group>"; };
 		7C0BBDE721172BE2000791F1 /* FileStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStoreTests.swift; sourceTree = "<group>"; };
 		7C0BBDE921172D2D000791F1 /* TestData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = TestData.json; sourceTree = "<group>"; };
+		7C0BBDEB21173678000791F1 /* TestUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtilities.swift; sourceTree = "<group>"; };
 		7C26F8762111CB6B00E5F876 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		7C42265B21130A3C003F4875 /* HeroDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeroDetailsViewController.swift; sourceTree = "<group>"; };
 		7C42265C21130A3C003F4875 /* HeroDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeroDetailsViewController.xib; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 			children = (
 				7C0BBDE921172D2D000791F1 /* TestData.json */,
 				7C0BBDE721172BE2000791F1 /* FileStoreTests.swift */,
+				7C0BBDEB21173678000791F1 /* TestUtilities.swift */,
 				7C56FB992111C1F30083E5B1 /* Info.plist */,
 			);
 			path = HeroesTests;
@@ -395,6 +398,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7C0BBDEC21173678000791F1 /* TestUtilities.swift in Sources */,
 				7C0BBDE821172BE2000791F1 /* FileStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

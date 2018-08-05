@@ -63,4 +63,15 @@ class FileStore: Store {
             print(error)
         }
     }
+    
+    func removeFromDisk() {
+        
+        do {
+            let fileURL = try URLForFileInDocumentsDirectory(storeFilename)
+            try FileManager.default.removeItem(atPath: fileURL.path)
+            
+        } catch {
+            print(error)
+        }
+    }
 }
