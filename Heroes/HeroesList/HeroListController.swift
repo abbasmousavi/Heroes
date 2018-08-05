@@ -97,8 +97,8 @@ class HeroListController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! HeroCell
-        cell.configure(hero: heroes[indexPath.row], delegate: cellDelegate)
-        return cell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as? HeroCell
+        cell?.configure(hero: heroes[indexPath.row], delegate: cellDelegate)
+        return cell!
     }
 }

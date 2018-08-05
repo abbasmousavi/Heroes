@@ -9,7 +9,7 @@
 import UIKit
 
 protocol HeroesListViewControllerProtocol: class {
-    func userDidSelectItem(_ item: Hero) -> Void
+    func userDidSelectItem(_ item: Hero)
 }
 
 class HeroesListViewController: UIViewController {
