@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Result<T:Codable>{
+enum Result<T: Codable> {
     case success(APIResponse<T>)
     case failure(Error)
     var isSuccess: Bool {
@@ -19,21 +19,22 @@ enum Result<T:Codable>{
             return false
         }
     }
+
     var value: APIResponse<T>? {
         switch self {
-        case .success(let value):
+        case let .success(value):
             return value
         case .failure:
             return nil
         }
     }
+
     var error: Error? {
         switch self {
         case .success:
             return nil
-        case .failure(let error):
+        case let .failure(error):
             return error
         }
     }
 }
-

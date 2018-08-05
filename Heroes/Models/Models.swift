@@ -9,18 +9,18 @@
 import Foundation
 
 protocol Listable {
-    var title:String? {get}
-    var thumbnail: Thumbnail? {get}
+    var title: String? { get }
+    var thumbnail: Thumbnail? { get }
 }
 
-struct APIResponse<T:Codable>: Codable {
+struct APIResponse<T: Codable>: Codable {
     let code: Int
     let status, copyright, attributionText, attributionHTML: String?
     let etag: String
     let data: ResponseData<T>
 }
 
-struct ResponseData<T:Codable>: Codable {
+struct ResponseData<T: Codable>: Codable {
     let offset, limit, total, count: Int
     let results: [T]
 }
@@ -77,7 +77,6 @@ struct URLSpecifier: Codable {
 // MARK: Convenience initializers
 
 extension APIResponse {
-    
     init(data: Data) throws {
         let me = try JSONDecoder().decode(APIResponse.self, from: data)
         self = me
@@ -100,7 +99,6 @@ extension Hero {
 
 extension Hero: Equatable {
     static func == (lhs: Hero, rhs: Hero) -> Bool {
-        
         return lhs.id == rhs.id
     }
 }
@@ -124,10 +122,9 @@ extension Thumbnail {
         guard let me = try? JSONDecoder().decode(Thumbnail.self, from: data) else { return nil }
         self = me
     }
-    
-    var thumbnailURL:URL? {
-        
-        guard let path = self.path, let extention = pathExtension else {return nil}
+
+    var thumbnailURL: URL? {
+        guard let path = self.path, let extention = pathExtension else { return nil }
         return URL(string: path + "." + extention)
     }
 }
@@ -138,4 +135,3 @@ extension URLSpecifier {
         self = me
     }
 }
-

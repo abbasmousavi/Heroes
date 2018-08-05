@@ -15,10 +15,9 @@ protocol HeroCellProtocol: class {
 }
 
 class HeroCell: UITableViewCell {
-
-    @IBOutlet private weak var favoriteButton: FavoriteButton!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet weak var mainImageView: NetworkImageView!
+    @IBOutlet private var favoriteButton: FavoriteButton!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet var mainImageView: NetworkImageView!
     private var hero: Hero?
     weak var delegate: HeroCellProtocol?
 
@@ -29,7 +28,6 @@ class HeroCell: UITableViewCell {
     }
 
     func configure(hero: Hero, delegate: HeroCellProtocol?) {
-
         self.hero = hero
         self.delegate = delegate
         if let url = hero.thumbnail.thumbnailURL {
@@ -46,8 +44,7 @@ class HeroCell: UITableViewCell {
         favoriteButton.isFavorite = false
     }
 
-    @IBAction func toggleFavorite(_ sender: Any) {
-
+    @IBAction func toggleFavorite(_: Any) {
         if favoriteButton.isFavorite {
             delegate?.removeFavorite(hero!)
             favoriteButton.isFavorite = false

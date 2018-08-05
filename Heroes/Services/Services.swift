@@ -6,23 +6,21 @@
 //  Copyright © 2018 Abbas Mousavi. All rights reserved.
 //
 
-import UIKit
 import Foundation
+import UIKit
 
 let publicKey = "608dd9c32bcf28c626313e295070623c"
 let privateKey = "925b08d6c60037b1d07a1123b0a80873d5f0da79"
 
 class Services {
-
     let session = URLSession(configuration: URLSessionConfiguration.default)
     let store: Store
 
-    init (store: Store) {
+    init(store: Store) {
         self.store = store
     }
 
-    func request<T> (uri: String, parameters: [String: String] = [:], limit: Int = 20, offset: Int = 0, completion: @escaping ((Result<T>) -> Void)) {
-
+    func request<T>(uri: String, parameters: [String: String] = [:], limit: Int = 20, offset: Int = 0, completion: @escaping ((Result<T>) -> Void)) {
         let ts = Int(Date().timeIntervalSince1970)
         let hashableString = "\(ts)" + privateKey + publicKey
         let hash = hashableString.md5()
@@ -39,7 +37,7 @@ class Services {
 
         let request = URLRequest(url: url.url!)
 
-        let task = session.dataTask(with: request) { (data, response, error) in
+        let task = session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 DispatchQueue.main.async {
                     completion(Result.failure(error!))
@@ -67,9 +65,8 @@ class Services {
 
         task.resume()
     }
-    
+
     func loadHeroesList(query: String?, offset: Int, completion: @escaping ((Result<Hero>) -> Void)) {
-        
         let parameters: [String: String] = query == nil ? [:] : ["nameStartsWith": query!]
         request(uri: "https://gateway.marvel.com/v1/public/characters", parameters: parameters, offset: offset, completion: completion)
     }

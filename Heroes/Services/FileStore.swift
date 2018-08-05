@@ -15,17 +15,15 @@ protocol Store {
 }
 
 class FileStore: Store {
-    
     let storeFilename: String
     var store = [Int: Hero]()
-    
+
     func URLForFileInDocumentsDirectory(_ filename: String) throws -> URL {
         let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
         return documentDirectory.appendingPathComponent(filename)
     }
-    
+
     init(_ storeFilename: String = "Store") {
-        
         self.storeFilename = storeFilename
         NotificationCenter.default.addObserver(self, selector: #selector(saveToDisk), name: .UIApplicationWillTerminate, object: nil)
         do {
@@ -36,40 +34,39 @@ class FileStore: Store {
             print(error)
         }
     }
-    
+
     deinit {
         NotificationCenter.default.removeObserver(self, name: .UIApplicationWillTerminate, object: nil)
     }
-    
+
     func save(_ item: Hero) {
         store[item.id] = item
     }
-    
+
     func remove(_ item: Hero) {
         store.removeValue(forKey: item.id)
     }
-    
+
     func isInStore(_ item: Hero) -> Bool {
         return store[item.id] != nil
     }
-    
+
     @objc func saveToDisk() {
         do {
             let jsonData = try JSONEncoder().encode(store)
             let fileURL = try URLForFileInDocumentsDirectory(storeFilename)
             try jsonData.write(to: fileURL)
-            
+
         } catch {
             print(error)
         }
     }
-    
+
     func removeFromDisk() {
-        
         do {
             let fileURL = try URLForFileInDocumentsDirectory(storeFilename)
             try FileManager.default.removeItem(atPath: fileURL.path)
-            
+
         } catch {
             print(error)
         }

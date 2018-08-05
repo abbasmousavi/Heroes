@@ -28,7 +28,7 @@ class HeroesListViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -118,7 +118,7 @@ extension HeroesListViewController: UISearchBarDelegate {
         loadHeroes()
     }
 
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_: UISearchBar) {
         if query != nil {
             offset = 0
             query = nil
@@ -130,7 +130,6 @@ extension HeroesListViewController: UISearchBarDelegate {
 }
 
 extension HeroesListViewController: StateIndicatorProtocol {
-    
     func userDidRequestRetry() {
         stateIndicator.startLoading()
         loadHeroes()

@@ -9,9 +9,8 @@
 import UIKit
 
 class EmbeddedListCell: UICollectionViewCell {
-
-    @IBOutlet weak var mainImageView: NetworkImageView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var mainImageView: NetworkImageView!
+    @IBOutlet var titleLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -9,15 +9,14 @@
 import UIKit
 
 class NavigationController: UINavigationController, UIViewControllerTransitioningDelegate {
-
     private let service: Services
 
-    init (service: Services) {
+    init(service: Services) {
         self.service = service
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -25,11 +24,10 @@ class NavigationController: UINavigationController, UIViewControllerTransitionin
         super.viewDidLoad()
         let initialViewController = HeroesListViewController(service: service)
         initialViewController.delegate = self
-        self.viewControllers = [initialViewController]
+        viewControllers = [initialViewController]
     }
 
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
+    func animationController(forPresented presented: UIViewController, presenting _: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         if let source = topViewController as? SourceOfAnimatedTransition,
             let destination = presented as? DestinationOfAnimatedTransition {
             return AnimatedTransition(source: source, destination: destination)
@@ -38,7 +36,6 @@ class NavigationController: UINavigationController, UIViewControllerTransitionin
     }
 
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
         if let source = dismissed as? SourceOfAnimatedTransition,
             let destination = topViewController as? DestinationOfAnimatedTransition {
             return ReverseAnimatedTransition(source: source, destination: destination)
@@ -46,8 +43,8 @@ class NavigationController: UINavigationController, UIViewControllerTransitionin
         return nil
     }
 }
-extension NavigationController: HeroesListViewControllerProtocol {
 
+extension NavigationController: HeroesListViewControllerProtocol {
     func userDidSelectItem(_ item: Hero) {
         let vc = HeroDetailsViewController(service: service, hero: item)
         vc.transitioningDelegate = self

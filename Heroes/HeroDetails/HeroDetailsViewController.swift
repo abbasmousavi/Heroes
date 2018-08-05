@@ -9,15 +9,14 @@
 import UIKit
 
 class HeroDetailsViewController: UIViewController {
-
-    @IBOutlet private weak var mainImage: NetworkImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
-    @IBOutlet private weak var descriptionLabel: UILabel!
-    @IBOutlet private weak var favoriteButton: FavoriteButton!
-    @IBOutlet private weak var storiesView: UIView!
-    @IBOutlet private weak var eventsView: UIView!
-    @IBOutlet private weak var comicsView: UIView!
-    @IBOutlet private weak var seriesView: UIView!
+    @IBOutlet private var mainImage: NetworkImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var descriptionLabel: UILabel!
+    @IBOutlet private var favoriteButton: FavoriteButton!
+    @IBOutlet private var storiesView: UIView!
+    @IBOutlet private var eventsView: UIView!
+    @IBOutlet private var comicsView: UIView!
+    @IBOutlet private var seriesView: UIView!
     private let hero: Hero
     private let service: Services
 
@@ -27,12 +26,12 @@ class HeroDetailsViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    @IBAction func dismiss(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    @IBAction func dismiss(_: Any) {
+        dismiss(animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
@@ -58,11 +57,9 @@ class HeroDetailsViewController: UIViewController {
 
         let stories = EmbeddedListViewController<Story>(service: service, uri: hero.stories.collectionURI, title: "Stories")
         addChild(stories, in: storiesView)
-
     }
 
-    @IBAction func toggleFavorite(_ sender: Any) {
-
+    @IBAction func toggleFavorite(_: Any) {
         if favoriteButton.isFavorite {
             service.store.remove(hero)
             favoriteButton.isFavorite = false
@@ -70,7 +67,6 @@ class HeroDetailsViewController: UIViewController {
             service.store.save(hero)
             favoriteButton.isFavorite = true
         }
-
     }
 }
 

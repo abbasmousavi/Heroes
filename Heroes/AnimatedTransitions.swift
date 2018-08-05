@@ -10,15 +10,14 @@ import Foundation
 import UIKit
 
 protocol DestinationOfAnimatedTransition {
-    func destinationView () -> UIView
+    func destinationView() -> UIView
 }
 
 protocol SourceOfAnimatedTransition {
-    func sourceView () -> UIView
+    func sourceView() -> UIView
 }
 
 class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
-
     private var source: SourceOfAnimatedTransition
     private var destination: DestinationOfAnimatedTransition
     init(source: SourceOfAnimatedTransition, destination: DestinationOfAnimatedTransition) {
@@ -26,12 +25,11 @@ class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
         self.destination = destination
     }
 
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+    func transitionDuration(using _: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
 
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-
         let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
         let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let finalFrameForVC = transitionContext.finalFrame(for: toViewController)
@@ -47,33 +45,29 @@ class AnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
         containerView.addSubview(sourceSnapshot!)
 
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
+            sourceSnapshot?.frame = self.destination.destinationView().frame
 
-                sourceSnapshot?.frame = self.destination.destinationView().frame
-
-            }) { finished in
+        }) { _ in
             toViewController.view.alpha = 1.0
             sourceSnapshot?.removeFromSuperview()
             transitionContext.completeTransition(true)
-
         }
     }
 }
 
 class ReverseAnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning {
-    
     private var source: SourceOfAnimatedTransition
     private var destination: DestinationOfAnimatedTransition
     init(source: SourceOfAnimatedTransition, destination: DestinationOfAnimatedTransition) {
         self.source = source
         self.destination = destination
     }
-    
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+
+    func transitionDuration(using _: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.4
     }
-    
+
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        
         let fromViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
         let toViewController = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
         let finalFrameForVC = transitionContext.finalFrame(for: toViewController)
@@ -81,18 +75,17 @@ class ReverseAnimatedTransition: NSObject, UIViewControllerAnimatedTransitioning
         toViewController.view.frame = finalFrameForVC
         containerView.addSubview(toViewController.view)
         containerView.sendSubview(toBack: toViewController.view)
-        
+
         let sourceSnapshot = source.sourceView().resizableSnapshotView(from: source.sourceView().bounds, afterScreenUpdates: false, withCapInsets: UIEdgeInsets.zero)
-        
+
         sourceSnapshot?.frame = fromViewController.view.convert(source.sourceView().frame, from: source.sourceView().superview)
         containerView.addSubview(sourceSnapshot!)
         fromViewController.view.removeFromSuperview()
         let destinationframe = toViewController.view.convert(destination.destinationView().frame, from: destination.destinationView().superview)
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-            
             sourceSnapshot?.frame = destinationframe
-            
-        }) { finished in
+
+        }) { _ in
 
             sourceSnapshot?.removeFromSuperview()
             transitionContext.completeTransition(true)

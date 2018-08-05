@@ -9,13 +9,11 @@
 import UIKit
 
 protocol HeroListControllerProtocol: class {
-
     func userDidRequestLoadingMoreItems()
     func userDidSelectItem(_ item: Hero)
 }
 
 class HeroListController: UITableViewController {
-
     private let paginationLoadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     var heroes = [Hero]()
     weak var cellDelegate: HeroCellProtocol?
@@ -31,12 +29,12 @@ class HeroListController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: "HeroCell", bundle: nil), forCellReuseIdentifier: "HeroCell")
+        tableView.register(UINib(nibName: String(describing: HeroCell.self), bundle: nil), forCellReuseIdentifier: String(describing: HeroCell.self))
         paginationLoadingIndicator.hidesWhenStopped = true
         tableView.tableFooterView = paginationLoadingIndicator
 
         // Uncomment the following line to preserve selection between presentations
-        self.clearsSelectionOnViewWillAppear = false
+        clearsSelectionOnViewWillAppear = false
         tableView.separatorStyle = .none
         tableView.rowHeight = 70
     }
@@ -54,12 +52,12 @@ class HeroListController: UITableViewController {
     }
 
     func appendToList(_ items: [Hero]) {
-        let indexPaths = (heroes.count..<(heroes.count + items.count)).map { item in
+        let indexPaths = (heroes.count ..< (heroes.count + items.count)).map { item in
             return IndexPath(item: item, section: 0)
         }
 
-        self.heroes.append(contentsOf: items)
-        self.tableView.insertRows(at: indexPaths, with: .none)
+        heroes.append(contentsOf: items)
+        tableView.insertRows(at: indexPaths, with: .none)
     }
 
     func emptyList() {
@@ -72,33 +70,32 @@ class HeroListController: UITableViewController {
     }
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-
         let scrollViewContentHeight = tableView.contentSize.height
         var scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
-        if (tableView.contentSize.height < tableView.bounds.size.height) {
+        if tableView.contentSize.height < tableView.bounds.size.height {
             scrollOffsetThreshold = tableView.bounds.size.height
         }
-        
-        if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging)  {
+
+        if scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging {
             paginationLoadingIndicator.startAnimating()
             delegate?.userDidRequestLoadingMoreItems()
         }
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         delegate?.userDidSelectItem(heroes[indexPath.row])
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in _: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         return heroes.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HeroCell", for: indexPath) as! HeroCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeroCell.self), for: indexPath) as! HeroCell
         cell.configure(hero: heroes[indexPath.row], delegate: cellDelegate)
         return cell
     }

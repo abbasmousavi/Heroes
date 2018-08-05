@@ -10,7 +10,6 @@ import Foundation
 @testable import Heroes
 
 class TestUtilities {
-    
     class func LoadTestHeros() -> [Hero] {
         do {
             let testBundle = Bundle(for: TestUtilities.self)

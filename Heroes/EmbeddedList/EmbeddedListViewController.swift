@@ -10,17 +10,16 @@ import UIKit
 
 private let reuseIdentifier = "EmbeddedListCell"
 
-class EmbeddedListViewController < T: Codable & Listable >: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
-
+class EmbeddedListViewController<T: Codable & Listable>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     private let uri: String
     private var items = [T]()
     private let service: Services
 
-    @IBOutlet weak var stateIndicator: StateIndicator!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet var stateIndicator: StateIndicator!
+    @IBOutlet var collectionView: UICollectionView!
+    @IBOutlet var titleLabel: UILabel!
 
-    required init?(coder aDecoder: NSCoder) {
+    required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -43,13 +42,13 @@ class EmbeddedListViewController < T: Codable & Listable >: UIViewController, UI
     func loadData() {
         stateIndicator.startLoading()
         service.request(uri: uri) { (result: Result<T>) in
-           
+
             guard result.isSuccess else {
                 self.stateIndicator.stopLoading(error: result.error!)
                 return
             }
             self.items = result.value!.data.results
-            if (self.items.count > 0) {
+            if self.items.count > 0 {
                 self.stateIndicator.stopLoading()
                 self.collectionView.reloadData()
             } else {
@@ -57,19 +56,18 @@ class EmbeddedListViewController < T: Codable & Listable >: UIViewController, UI
             }
         }
     }
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
 
+    func numberOfSections(in _: UICollectionView) -> Int {
         return 1
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+
+    func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
         return items.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? EmbeddedListCell
-        
+
         if let url = items[indexPath.row].thumbnail?.thumbnailURL {
             cell?.mainImageView?.image = UIImage(named: "loading")
             cell?.mainImageView?.setURL(url: url)
