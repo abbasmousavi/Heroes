@@ -53,11 +53,11 @@ struct Comic: Codable, Listable {
 struct Stories: Codable {
     let available: Int
     let collectionURI: String
-    let items: [StoriesItem]
+    let items: [Storie]
     let returned: Int
 }
 
-struct StoriesItem: Codable {
+struct Storie: Codable {
     let resourceURI, name: String
     let type: String
 }
@@ -73,14 +73,8 @@ struct Thumbnail: Codable {
 }
 
 struct URLSpecifier: Codable {
-    let type: URLType
+    let type: String
     let url: String
-}
-
-enum URLType: String, Codable {
-    case comiclink = "comiclink"
-    case detail = "detail"
-    case wiki = "wiki"
 }
 
 // MARK: Convenience initializers
@@ -98,44 +92,12 @@ extension ResponseData {
         guard let me = try? JSONDecoder().decode(ResponseData.self, from: data) else { return nil }
         self = me
     }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
-    }
 }
 
 extension Hero {
     init?(data: Data) {
         guard let me = try? JSONDecoder().decode(Hero.self, from: data) else { return nil }
         self = me
-    }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
     }
 }
 
@@ -144,30 +106,12 @@ extension Hero: Equatable {
         
         return lhs.id == rhs.id
     }
-    
-    
 }
 
 extension Comics {
     init?(data: Data) {
         guard let me = try? JSONDecoder().decode(Comics.self, from: data) else { return nil }
         self = me
-    }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
     }
 }
 
@@ -176,22 +120,6 @@ extension Comic {
         guard let me = try? JSONDecoder().decode(Comic.self, from: data) else { return nil }
         self = me
     }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
-    }
 }
 
 extension Stories {
@@ -199,44 +127,12 @@ extension Stories {
         guard let me = try? JSONDecoder().decode(Stories.self, from: data) else { return nil }
         self = me
     }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
-    }
 }
 
-extension StoriesItem {
+extension Storie {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(StoriesItem.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(Storie.self, from: data) else { return nil }
         self = me
-    }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
     }
 }
 
@@ -245,24 +141,9 @@ extension Thumbnail {
         guard let me = try? JSONDecoder().decode(Thumbnail.self, from: data) else { return nil }
         self = me
     }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
-    }
     
     var thumbnailURL:URL? {
-    
+        
         guard let path = self.path, let extention = pathExtension else {return nil}
         return URL(string: path + "." + extention)
     }
@@ -272,20 +153,6 @@ extension URLSpecifier {
     init?(data: Data) {
         guard let me = try? JSONDecoder().decode(URLSpecifier.self, from: data) else { return nil }
         self = me
-    }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-    var jsonData: Data? {
-        return try? JSONEncoder().encode(self)
-    }
-
-    var json: String? {
-        guard let data = self.jsonData else { return nil }
-        return String(data: data, encoding: .utf8)
     }
 }
 
