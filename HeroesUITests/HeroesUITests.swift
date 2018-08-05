@@ -9,7 +9,6 @@
 import XCTest
 
 class HeroesUITests: XCTestCase {
-
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -26,9 +25,35 @@ class HeroesUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testThatFavoriteButtonWorksCorrectly() {
+        let app = XCUIApplication()
+        let tablesQuery = app.tables
+        tablesQuery.cells.containing(.staticText, identifier: "3-D Man").buttons["fav inactive"].tap()
+        tablesQuery /* @START_MENU_TOKEN@ */ .staticTexts["3-D Man"] /* [[".cells.staticTexts[\"3-D Man\"]",".staticTexts[\"3-D Man\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@ */ .tap()
+        app.scrollViews.otherElements.buttons["fav active"].tap()
+        app.buttons["close"].tap()
+
+        XCTAssert(tablesQuery.cells.containing(.staticText, identifier: "3-D Man").buttons["fav inactive"].exists)
     }
 
+    func testThatScrollingToTheEndOfListWillLoadMoreItems() {
+        let app = XCUIApplication()
+        app.tables.element(boundBy: 0).swipeUp()
+        app.tables.element(boundBy: 0).swipeUp()
+        app.tables.element(boundBy: 0).swipeUp()
+        app.tables.element(boundBy: 0).swipeUp()
+        _ = app.tables.staticTexts["Amora"].waitForExistence(timeout: 10)
+        XCTAssert(app.tables.staticTexts["Amora"].exists)
+    }
+
+    func testSearchFunctionality() {
+        let app = XCUIApplication()
+        let searchField = app.searchFields["Search by character name"]
+        searchField.tap()
+        searchField.typeText("Avengers")
+        app /* @START_MENU_TOKEN@ */ .buttons["Search"] /* [[".keyboards.buttons[\"Search\"]",".buttons[\"Search\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@ */ .tap()
+
+        _ = app.tables.staticTexts["Avengers"].waitForExistence(timeout: 10)
+        XCTAssert(app.tables.staticTexts["Avengers"].exists)
+    }
 }
