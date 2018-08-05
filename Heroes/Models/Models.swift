@@ -36,31 +36,28 @@ struct Hero: Codable {
     let urls: [URLSpecifier]
 }
 
-struct Comics: Codable {
+struct Contents: Codable {
     let available: Int?
-    let collectionURI: String?
-    let items: [Comic]
+    let collectionURI: String
+    let items: [ContentItem]
     let returned: Int
 }
 
-struct Comic: Codable, Listable {
+struct ContentItem: Codable, Listable {
     let resourceURI: String
     let name: String?
     var title: String?
     var thumbnail: Thumbnail?
 }
 
-struct Stories: Codable {
-    let available: Int
-    let collectionURI: String
-    let items: [Storie]
-    let returned: Int
-}
-
-struct Storie: Codable {
-    let resourceURI, name: String
-    let type: String
-}
+typealias Comics = Contents
+typealias Comic = ContentItem
+typealias Stories = Contents
+typealias Story = ContentItem
+typealias Events = Contents
+typealias Event = ContentItem
+typealias Series = Contents
+typealias Serie = ContentItem
 
 struct Thumbnail: Codable {
     let path: String?
@@ -108,30 +105,16 @@ extension Hero: Equatable {
     }
 }
 
-extension Comics {
+extension Contents {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(Comics.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(Contents.self, from: data) else { return nil }
         self = me
     }
 }
 
-extension Comic {
+extension ContentItem {
     init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(Comic.self, from: data) else { return nil }
-        self = me
-    }
-}
-
-extension Stories {
-    init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(Stories.self, from: data) else { return nil }
-        self = me
-    }
-}
-
-extension Storie {
-    init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(Storie.self, from: data) else { return nil }
+        guard let me = try? JSONDecoder().decode(ContentItem.self, from: data) else { return nil }
         self = me
     }
 }

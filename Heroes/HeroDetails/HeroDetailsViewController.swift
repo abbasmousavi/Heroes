@@ -47,16 +47,16 @@ class HeroDetailsViewController: UIViewController {
         titleLabel?.text = hero.name
         descriptionLabel?.text = hero.description.count > 0 ? hero.description : "No description available"
 
-        let comics = EmbeddedListViewController<Comic>(service: service, uri: hero.comics.collectionURI!, title: "Comics")
+        let comics = EmbeddedListViewController<Comic>(service: service, uri: hero.comics.collectionURI, title: "Comics")
         addChild(comics, in: comicsView)
 
-        let series = EmbeddedListViewController<Comic>(service: service, uri: hero.series.collectionURI!, title: "Series")
+        let series = EmbeddedListViewController<Serie>(service: service, uri: hero.series.collectionURI, title: "Series")
         addChild(series, in: seriesView)
 
-        let events = EmbeddedListViewController<Comic>(service: service, uri: hero.events.collectionURI!, title: "Events")
+        let events = EmbeddedListViewController<Event>(service: service, uri: hero.events.collectionURI, title: "Events")
         addChild(events, in: eventsView)
 
-        let stories = EmbeddedListViewController<Comic>(service: service, uri: hero.stories.collectionURI, title: "Stories")
+        let stories = EmbeddedListViewController<Story>(service: service, uri: hero.stories.collectionURI, title: "Stories")
         addChild(stories, in: storiesView)
 
     }
