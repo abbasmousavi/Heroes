@@ -44,9 +44,18 @@ class Services {
                 }
                 return
             }
-            guard 200 ... 299 ~= (response as! HTTPURLResponse).statusCode else {
-                DispatchQueue.main.async {
-                    completion(.failure(NSError(domain: "", code: 0, userInfo: nil)))
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            guard 200 ... 299 ~= statusCode else {
+                
+                do {
+                    let response = try APIResponse<T>(data: data!)
+                    DispatchQueue.main.async {
+                        completion(.failure(NSError(domain: "com.marvel", code: response.code, userInfo: [NSLocalizedDescriptionKey: response.status ?? "UnKnown Error"])))
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
                 return
             }

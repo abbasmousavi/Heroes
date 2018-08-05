@@ -64,7 +64,7 @@ class HeroesListViewController: UIViewController {
             if self.listController.heroes.count > 0 {
                 self.stateIndicator.stopLoading()
             } else {
-                self.stateIndicator.stopLoading(message: "No items available")
+                self.stateIndicator.stopLoading(message: "No items found with query: \(self.query ?? "")")
             }
 
             self.offset += 1
