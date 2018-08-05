@@ -8,6 +8,8 @@
 
 import UIKit
 
+private let reuseIdentifier = String(describing: HeroCell.self)
+
 protocol HeroListControllerProtocol: class {
     func userDidRequestLoadingMoreItems()
     func userDidSelectItem(_ item: Hero)
@@ -29,7 +31,7 @@ class HeroListController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UINib(nibName: String(describing: HeroCell.self), bundle: nil), forCellReuseIdentifier: String(describing: HeroCell.self))
+        tableView.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellReuseIdentifier: reuseIdentifier)
         paginationLoadingIndicator.hidesWhenStopped = true
         tableView.tableFooterView = paginationLoadingIndicator
 
@@ -95,7 +97,7 @@ class HeroListController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: HeroCell.self), for: indexPath) as! HeroCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! HeroCell
         cell.configure(hero: heroes[indexPath.row], delegate: cellDelegate)
         return cell
     }

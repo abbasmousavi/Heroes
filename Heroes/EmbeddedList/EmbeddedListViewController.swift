@@ -8,7 +8,8 @@
 
 import UIKit
 
-private let reuseIdentifier = "EmbeddedListCell"
+private let reuseIdentifier = String(describing: EmbeddedListCell.self)
+private let nameOfNibFile = "EmbeddedListViewController"
 
 class EmbeddedListViewController<T: Codable & Listable>: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     private let uri: String
@@ -26,7 +27,7 @@ class EmbeddedListViewController<T: Codable & Listable>: UIViewController, UICol
     init(service: Services, uri: String, title: String) {
         self.uri = uri
         self.service = service
-        super.init(nibName: "EmbeddedListViewController", bundle: nil)
+        super.init(nibName: nameOfNibFile, bundle: nil)
         self.title = title
     }
 
