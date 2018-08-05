@@ -36,14 +36,19 @@ class EmbeddedListViewController < T: Codable & Listable >: UIViewController, UI
         collectionView?.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.backgroundColor = .white
         titleLabel?.text = title
+        stateIndicator?.delegate = self
         loadData()
     }
 
     func loadData() {
         stateIndicator.startLoading()
         service.request(uri: uri) { (result: Result<T>) in
+           
+            guard result.isSuccess else {
+                self.stateIndicator.stopLoading(error: result.error!)
+                return
+            }
             self.items = result.value!.data.results
-
             if (self.items.count > 0) {
                 self.stateIndicator.stopLoading()
                 self.collectionView.reloadData()
@@ -54,12 +59,11 @@ class EmbeddedListViewController < T: Codable & Listable >: UIViewController, UI
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
+
         return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return items.count
     }
     
@@ -72,5 +76,11 @@ class EmbeddedListViewController < T: Codable & Listable >: UIViewController, UI
         }
         cell?.titleLabel?.text = items[indexPath.row].title
         return cell!
+    }
+}
+
+extension EmbeddedListViewController: StateIndicatorProtocol {
+    func userDidRequestRetry() {
+        loadData()
     }
 }

@@ -132,6 +132,7 @@ extension HeroesListViewController: UISearchBarDelegate {
 extension HeroesListViewController: StateIndicatorProtocol {
     
     func userDidRequestRetry() {
+        stateIndicator.startLoading()
         loadHeroes()
     }
 }

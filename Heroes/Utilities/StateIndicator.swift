@@ -41,9 +41,6 @@ class StateIndicator: UIView {
     }
     
     @IBAction func retry(_ sender: Any) {
-        activityIndicator.startAnimating()
-        messagesLabel.isHidden = true
-        retryButton.isHidden = true
         delegate?.userDidRequestRetry()
     }
     
