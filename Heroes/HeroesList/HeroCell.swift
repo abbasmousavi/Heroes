@@ -28,9 +28,10 @@ class HeroCell: UITableViewCell {
         mainImageView.layer.masksToBounds = true
     }
 
-    func configure(hero: Hero) {
+    func configure(hero: Hero, delegate: HeroCellProtocol?) {
 
         self.hero = hero
+        self.delegate = delegate
         if let url = hero.thumbnail.thumbnailURL {
             mainImageView.setURL(url: url)
         }
