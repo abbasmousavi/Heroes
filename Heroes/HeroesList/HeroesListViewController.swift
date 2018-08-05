@@ -53,7 +53,9 @@ class HeroesListViewController: UIViewController {
             self.isDataLoading = false
             self.listController.stopLoadingAnimation()
             guard result.isSuccess else {
-                self.stateIndicator.stopLoading(error: result.error!)
+                if (self.offset == 0) {
+                    self.stateIndicator.stopLoading(error: result.error!)
+                }
                 return
             }
 
