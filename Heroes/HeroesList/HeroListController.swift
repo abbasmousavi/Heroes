@@ -73,12 +73,13 @@ class HeroListController: UITableViewController {
 
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
 
-        // Calculate the position of one screen length before the bottom of the results
         let scrollViewContentHeight = tableView.contentSize.height
-        let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
-
-        // When the user has scrolled past the threshold, start requesting
-        if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging) {
+        var scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+        if (tableView.contentSize.height < tableView.bounds.size.height) {
+            scrollOffsetThreshold = tableView.bounds.size.height
+        }
+        
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.isDragging)  {
             paginationLoadingIndicator.startAnimating()
             delegate?.userDidRequestLoadingMoreItems()
         }
