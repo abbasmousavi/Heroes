@@ -36,6 +36,7 @@ class HeroesListViewController: UIViewController {
         super.viewDidLoad()
         configureSearchController()
         addChild(listController, in: view)
+        stateIndicator.delegate = self
         view.sendSubview(toBack: listController.view)
         listController.delegate = self
         listController.cellDelegate = self
@@ -125,6 +126,13 @@ extension HeroesListViewController: UISearchBarDelegate {
             stateIndicator.startLoading()
             loadHeroes()
         }
+    }
+}
+
+extension HeroesListViewController: StateIndicatorProtocol {
+    
+    func userDidRequestRetry() {
+        loadHeroes()
     }
 }
 

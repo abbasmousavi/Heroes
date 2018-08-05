@@ -9,7 +9,6 @@
 import UIKit
 
 protocol StateIndicatorProtocol: class {
-
     func userDidRequestRetry()
 }
 
@@ -19,7 +18,7 @@ class StateIndicator: UIView {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var messagesLabel: UILabel!
     @IBOutlet weak var retryButton: UIButton!
-    private weak var delegate: StateIndicatorProtocol?
+    weak var delegate: StateIndicatorProtocol?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +41,9 @@ class StateIndicator: UIView {
     }
     
     @IBAction func retry(_ sender: Any) {
+        activityIndicator.startAnimating()
+        messagesLabel.isHidden = true
+        retryButton.isHidden = true
         delegate?.userDidRequestRetry()
     }
     
@@ -75,12 +77,4 @@ class StateIndicator: UIView {
         retryButton.isHidden = false
         self.isHidden = false
     }
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-
 }
