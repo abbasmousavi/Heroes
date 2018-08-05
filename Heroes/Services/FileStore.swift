@@ -19,6 +19,14 @@ class FileStore: Store {
     
     var store = [Int:Hero]()
     
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(saveToDisk), name: .UIApplicationWillTerminate, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .UIApplicationWillTerminate, object: nil)
+    }
+    
     func save(_ item:Hero)  {
         store[item.id] = item
     }
@@ -29,5 +37,19 @@ class FileStore: Store {
     
     func isInStore(_ item:Hero) -> Bool {
         return store[item.id] != nil
+    }
+    
+    @objc func saveToDisk() {
+        
+        let jsonEncoder = JSONEncoder()
+        do {
+            let jsonData = try jsonEncoder.encode(store)
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false)
+            let fileURL = documentDirectory.appendingPathComponent("store")
+            try jsonData.write(to: fileURL)
+            
+        } catch {
+            print(error)
+        }
     }
 }
