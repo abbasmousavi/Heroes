@@ -34,7 +34,6 @@ class EmbeddedListViewController<T: Codable & Listable>: UIViewController, UICol
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView?.register(UINib(nibName: reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
-        collectionView.backgroundColor = .white
         titleLabel?.text = title
         stateIndicator?.delegate = self
         loadData()

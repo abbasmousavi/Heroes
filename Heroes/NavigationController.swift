@@ -48,6 +48,7 @@ extension NavigationController: HeroesListViewControllerProtocol {
     func userDidSelectItem(_ item: Hero) {
         let vc = HeroDetailsViewController(service: service, hero: item)
         vc.transitioningDelegate = self
+        vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true, completion: nil)
     }
 }
