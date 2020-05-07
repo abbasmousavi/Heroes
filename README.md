@@ -1,6 +1,6 @@
 ## Heroes
 
-![Test](https://github.com/abbasmousavi/Heroes/workflows/Test/badge.svg)
+![Test](https://github.com/abbasmousavi/Heroes/workflows/Test/badge.svg?branch=master)
 
 Heroes is an app to search Marver Database of superheroes, written in `Swift` 4.1, and tested on iOS 11 and 12.
 
