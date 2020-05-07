@@ -1,5 +1,7 @@
 ## Heroes
 
+![Test](https://github.com/abbasmousavi/Heroes/workflows/Test/badge.svg)
+
 Heroes is an app to search Marver Database of superheroes, written in `Swift` 4.1, and tested on iOS 11 and 12.
 
 I have tried to use a simple, clean, extendable and testable structure for the project. When the app starts running, It initializes the store and the service and injects them to `NavigationController` initializer. I have used a `UINavigationController` as the navigation "coordinator". In larger projects, each flow can have its own coordinator, and it is not required to be a subclass of `UINavigationController`, having a reference to view controllers is enough to present, push or show other view controllers. This coordinator act as the delegate of all view controllers in the flow and is responsible for pushing or presenting view controllers and transitions between them.
