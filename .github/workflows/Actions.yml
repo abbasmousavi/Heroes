@@ -5,7 +5,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+env:
+  DEVELOPER_DIR: /Applications/Xcode_12.1.app/Contents/Developer
 jobs:
   build:
 
@@ -14,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Run tests
-      run: xcodebuild clean test -project Heroes.xcodeproj -scheme Heroes -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.4.1'
+      run: xcodebuild clean test -project Heroes.xcodeproj -scheme Heroes -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 12,OS=14.1'
